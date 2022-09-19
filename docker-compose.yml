@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  db:
+    ports:
+      - '3300:3300'
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: maxaro
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - mysql:/var/lib/mysql
+volumes:
+  mysql:
