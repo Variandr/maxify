@@ -12,6 +12,7 @@
     "start": "next start",
     "lint": "yarn run eslint . --ext .js,.jsx,.ts,.tsx",
     "seed": "prisma db seed",
+    "deploy": "prisma db push",
     "generate": "prisma generate",
     "migrate": "yarn prisma migrate dev",
     "studio": "prisma studio",
