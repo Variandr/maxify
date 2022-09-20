@@ -1,5 +1,5 @@
 // import { reseedDatabase } from '../../test/seed'
-// import prisma from './prisma'
+import prisma from './prisma'
 //
 // reseedDatabase()
 //     .catch((e) => {
