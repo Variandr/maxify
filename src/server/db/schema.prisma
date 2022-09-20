@@ -26,14 +26,14 @@ enum Role {
 }
 
 model order {
-  id             String         @id @default(cuid())
+  id             String         @id @default(uuid())
   createdAt      DateTime       @default(now()) @map("created_at")
   updatedAt      DateTime       @default(now()) @updatedAt @map("updated_at")
   organizationId String         @map("organization_id")
   totalPrice     String?        @map("total_price")
   discount       Int?
-  status         OrderStatus
-  deliveryStatus DeliveryStatus @map("delivery_status")
+  status         OrderStatus    @default(PAID)
+  deliveryStatus DeliveryStatus @default(DELIVERED) @map("delivery_status")
   clientId       String?        @map("client_id")
   product        Json
 
@@ -44,7 +44,7 @@ model order {
 }
 
 model client {
-  id       String  @id @default(cuid())
+  id       String  @id @default(uuid())
   name     String
   address  String?
   location String?
@@ -54,14 +54,14 @@ model client {
 }
 
 model category {
-  id      String    @id @default(cuid())
+  id      String    @id @default(uuid())
   name    String
   product product[]
   @@map("categories")
 }
 
 model product {
-  id             String        @id @default(cuid())
+  id             String        @id @default(uuid())
   createdAt      DateTime      @default(now()) @map("created_at")
   updatedAt      DateTime      @default(now()) @updatedAt @map("updated_at")
   organizationId String        @map("organization_id")
@@ -77,7 +77,7 @@ model product {
 }
 
 model organization {
-  id          String     @id @default(cuid())
+  id          String     @id @default(uuid())
   createdAt   DateTime   @default(now()) @map("created_at")
   name        String
   logoUrl     String?    @map("logo_url")
@@ -92,7 +92,7 @@ model organization {
 }
 
 model income {
-  id             String   @id @default(cuid())
+  id             String   @id @default(uuid())
   date           DateTime
   income         String
   organizationId String   @map("organization_id")
@@ -103,7 +103,7 @@ model income {
 }
 
 model employee {
-  id             String   @id @default(cuid())
+  id             String   @id @default(uuid())
   createdAt      DateTime @default(now()) @map("created_at")
   position       String
   salary         String
@@ -117,15 +117,15 @@ model employee {
 }
 
 model profile {
-  id         String  @id @default(cuid())
+  id         String  @id @default(uuid())
   email      String  @unique
   name       String
   surname    String?
   age        Int?
-  role       Role
+  role       Role    @default(USER)
   password   String
   avatarUrl  String? @map("avatar_url")
-  employeeId String?  @unique @map("emloyee_id")
+  employeeId String? @unique @map("emloyee_id")
 
   employee employee? @relation(fields: [employeeId], references: [id])
 
