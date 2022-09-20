@@ -3,12 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "yarn run prisma generate",
     "dev": "next dev",
+    "prebuild": "yarn run generate",
+    "find:unused": "npx next-unused",
+    "prepare": "husky install",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "yarn run eslint . --ext .js,.jsx,.ts,.tsx",
+    "seed": "prisma db seed",
+    "generate": "prisma generate",
+    "migrate": "yarn prisma migrate dev",
+    "studio": "prisma studio",
+    "ts-node": "ts-node --compiler-options '{\"module\":\"CommonJS\"}'"
   },
   "dependencies": {
+    "@prisma/client": "^4.3.1",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "next": "12.3.0",
