@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum OrderStatus {
+  PAID
+  UNPAID
+  IN_PROGRESS
+}
+
+enum DeliveryStatus {
+  DELIVERED
+  NOT_DELIVERED
+  IN_THE_WAY
+}
+
+enum Role {
+  USER
+  ADMIN
+  OWNER
+}
+
+model order {
+  id             String         @id @default(cuid())
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @default(now()) @updatedAt @map("updated_at")
+  organizationId String         @map("organization_id")
+  totalPrice     String?        @map("total_price")
+  discount       Int?
+  status         OrderStatus
+  deliveryStatus DeliveryStatus @map("delivery_status")
+  clientId       String?        @map("client_id")
+  product        Json
+
+  client         client?        @relation(fields: [clientId], references: [id])
+  organization   organization?  @relation(fields: [organizationId], references: [id])
+
+  @@map("orders")
+}
+
+model client {
+  id       String  @id @default(cuid())
+  name     String
+  address  String?
+  location String?
+  order    order[]
+
+  @@map("clients")
+}
+
+model category {
+  id      String    @id @default(cuid())
+  name    String
+  product product[]
+  @@map("categories")
+}
+
+model product {
+  id             String        @id @default(cuid())
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @default(now()) @updatedAt @map("updated_at")
+  organizationId String        @map("organization_id")
+  categoryId     String?       @map("category_id")
+  description    String?
+  name           String
+  price          Int
+
+  organization   organization? @relation(fields: [organizationId], references: [id])
+  category       category?     @relation(fields: [categoryId], references: [id])
+
+  @@map("products")
+}
+
+model organization {
+  id          String     @id @default(cuid())
+  createdAt   DateTime   @default(now()) @map("created_at")
+  name        String
+  logoUrl     String?    @map("logo_url")
+  description String?
+  totalIncome String?    @map("total_income")
+  employee    employee[]
+  income      income[]
+  product     product[]
+  order       order[]
+
+  @@map("organizations")
+}
+
+model income {
+  id             String   @id @default(cuid())
+  date           DateTime
+  income         String
+  organizationId String   @map("organization_id")
+
+  organization organization @relation(fields: [organizationId], references: [id])
+
+  @@map("incomes")
+}
+
+model employee {
+  id             String   @id @default(cuid())
+  createdAt      DateTime @default(now()) @map("created_at")
+  position       String
+  salary         String
+  organizationId String   @map("organization_id")
+  profileId      String   @map("profile_id")
+
+  organization organization @relation(fields: [organizationId], references: [id])
+  profile      profile?
+
+  @@map("employees")
+}
+
+model profile {
+  id         String  @id @default(cuid())
+  email      String  @unique
+  name       String
+  surname    String?
+  age        Int?
+  role       Role
+  password   String
+  avatarUrl  String? @map("avatar_url")
+  employeeId String?  @unique @map("emloyee_id")
+
+  employee employee? @relation(fields: [employeeId], references: [id])
+
+  @@map("profiles")
+}
