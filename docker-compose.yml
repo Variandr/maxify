@@ -1,14 +1,17 @@
 version: '3.8'
 services:
   db:
+    container_name: db
     ports:
-      - '3300:3300'
-    image: mysql:8.0
+      - '3306:3306'
+    image: mysql:latest
     restart: always
     environment:
       MYSQL_DATABASE: maxaro
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
       MYSQL_ROOT_PASSWORD: password
     volumes:
-      - mysql:/var/lib/mysql
+      - my-db:/var/lib/mysql
+
 volumes:
-  mysql:
+  my-db:
