@@ -3,28 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "yarn run prisma generate",
-    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
-    "prebuild": "yarn run generate",
-    "find:unused": "npx next-unused",
-    "prepare": "husky install",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "yarn run eslint . --ext .js,.jsx,.ts,.tsx",
-    "seed": "prisma db seed",
-    "generate": "prisma generate",
-    "migrate": "yarn prisma migrate dev",
-    "studio": "prisma studio",
-    "ts-node": "ts-node --compiler-options '{\"module\":\"CommonJS\"}'"
+    "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.9.8",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "next": "12.3.0",
     "next-unused": "^0.0.6",
     "prettier": "^2.7.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.35.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/node": "18.7.18",
