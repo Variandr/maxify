@@ -19,6 +19,7 @@
     "ts-node": "ts-node --compiler-options '{\"module\":\"CommonJS\"}'"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.9.8",
     "@prisma/client": "^4.3.1",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
@@ -26,7 +27,9 @@
     "next-unused": "^0.0.6",
     "prettier": "^2.7.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.35.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/node": "18.7.18",
