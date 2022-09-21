@@ -6,14 +6,14 @@ import { useState } from 'react'
 const Authorization = () => {
   const [forgotPassword, setForgotPassword] = useState(false)
   return (
-    <div className={'flex justify-center items-center'}>
+    <div className="flex justify-center items-center">
       <BackgroundLayout>
-        {!forgotPassword ? (
-          <AuthModal openForgotPassword={() => setForgotPassword(true)} />
-        ) : (
+        {forgotPassword ? (
           <ForgotPassword
             closeForgotPassword={() => setForgotPassword(false)}
           />
+        ) : (
+          <AuthModal openForgotPassword={() => setForgotPassword(true)} />
         )}
       </BackgroundLayout>
     </div>

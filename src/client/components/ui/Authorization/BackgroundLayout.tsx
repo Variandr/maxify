@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './background-layout.module.css'
+import styles from './BackgroundLayout.module.css'
 
 export interface LayoutProps {
   children: React.ReactNode
