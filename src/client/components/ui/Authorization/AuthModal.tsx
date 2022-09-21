@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import classnames from 'classnames'
 
 interface LoginData {
   email: string
@@ -14,11 +15,7 @@ interface Props {
 const schema = yup
   .object({
     email: yup.string().email().required(),
-    password: yup
-      .string()
-      .required()
-      .min(8, 'Password is too short - should be 8 chars minimum.')
-      .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
+    password: yup.string().required(),
   })
   .required()
 
@@ -70,7 +67,11 @@ const AuthModal = ({ openForgotPassword }: Props) => {
         </a>
 
         <button
-          className="mt-8 w-full bg-green-500 hover:bg-green-600 ease-in duration-200 text-green-100 border py-3 px-6 font-bold text-md rounded-xl"
+          className={classnames(
+            'mt-8 w-full ease-in duration-200 text-green-100 border py-3 px-6 font-bold text-md rounded-xl',
+            { 'bg-green-500 hover:bg-green-600': isValid },
+            { 'bg-green-500/50': !isValid }
+          )}
           type="submit"
           disabled={!isValid}
         >
