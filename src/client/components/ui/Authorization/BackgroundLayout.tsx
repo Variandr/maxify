@@ -1,16 +1,14 @@
-import React from "react";
+import React from 'react'
 import styles from './background-layout.module.css'
 
-export interface LayoutProps  {
+export interface LayoutProps {
   children: React.ReactNode
 }
 
-const BackgroundLayout = ({children}: LayoutProps) => {
+const BackgroundLayout = ({ children }: LayoutProps) => {
   return (
     <>
-      <div className={styles.context}>
-        {children}
-      </div>
+      <div className={styles.context}>{children}</div>
       <div className={styles.area}>
         <ul className={styles.circles}>
           <li></li>
@@ -26,7 +24,7 @@ const BackgroundLayout = ({children}: LayoutProps) => {
         </ul>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default BackgroundLayout;
+export default BackgroundLayout
