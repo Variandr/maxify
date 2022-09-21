@@ -56,7 +56,7 @@ export interface Order {
   status: OrderStatus
   deliveryStatus: DeliveryStatus
   clientId?: string | null
-  product: string[]
+  product: Record<string, string>[]
 }
 
 export enum Role {
@@ -202,20 +202,23 @@ export const testData: Seed = {
       status: OrderStatus.PAID,
       deliveryStatus: DeliveryStatus.IN_THE_WAY,
       discount: 5,
-      product: ['product-1/2'],
+      product: [{ productId: 'product-1', quantity: '2' }],
     },
     {
       totalPrice: '50',
       status: OrderStatus.UNPAID,
       deliveryStatus: DeliveryStatus.NOT_DELIVERED,
-      product: ['product-0/1'],
+      product: [{ productId: 'product-0', quantity: '1' }],
     },
     {
       totalPrice: '320',
       status: OrderStatus.PAID,
       deliveryStatus: DeliveryStatus.DELIVERED,
       discount: 20,
-      product: ['product-1/3', 'product-0/2'],
+      product: [
+        { productId: 'product-1', quantity: '3' },
+        { productId: 'product-0', quantity: '2' },
+      ],
     },
   ],
 }
