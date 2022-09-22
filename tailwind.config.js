@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       fontFamily: {
         basic: ['Reem Kufi Fun', 'sans-serif'],
+        mukta: ['Mukta', 'sans-serif'],
       },
     },
   },
