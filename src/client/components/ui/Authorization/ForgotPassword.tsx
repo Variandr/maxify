@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useState } from 'react'
 import ArrowLeft from '../../assets/arrow-left.svg'
 import Image from 'next/image'
+import classnames from 'classnames'
 
 const schema = yup.object({
   email: yup.string().email().required(),
@@ -56,7 +57,11 @@ const ForgotPassword = ({ closeForgotPassword }: Props) => {
 
             <div className="flex justify-between">
               <button
-                className="mt-9 w-[47%] bg-green-500 hover:bg-green-600 ease-in duration-200 text-white border py-3 px-6 font-bold text-md rounded-xl"
+                className={classnames(
+                  'mt-9 w-[47%] ease-in duration-200 text-white border py-3 px-6 font-bold text-md rounded-xl',
+                  { 'bg-green-500 hover:bg-green-600': isValid },
+                  { 'bg-green-500/50': !isValid }
+                )}
                 type="submit"
                 disabled={!isValid}
               >
