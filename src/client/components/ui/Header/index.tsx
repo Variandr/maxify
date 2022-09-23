@@ -1,5 +1,5 @@
 import React from 'react'
-import Account from '../../assets/account.svg'
+import Account from '../../../assets/account.svg'
 import Image from 'next/image'
 
 const Header = () => {
