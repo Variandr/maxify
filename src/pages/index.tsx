@@ -2,8 +2,32 @@ import type { NextPage } from 'next'
 import Authorization from '../client/components/ui/Authorization'
 import Header from '@components/ui/Header'
 import Sidebar from '@components/ui/Sidebar'
+import { getFeedStaticProps } from '../client/lib/feed-props'
 
-const Home: NextPage = () => {
+interface Props {
+  organization: any
+  income: any
+  order: any
+  product: any
+  employee: any
+}
+
+export async function getStaticProps(context) {
+  console.log(context)
+  const staticProps = await getFeedStaticProps(context)
+  const props = JSON.parse(JSON.stringify(staticProps))
+  return {
+    props: props || {},
+  }
+}
+
+const Home: NextPage = ({
+  organization,
+  income,
+  product,
+  order,
+  employee,
+}: Props) => {
   return (
     <div className="flex h-screen font-basic">
       <Sidebar />

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "predev": "yarn run prisma generate",
-    "dev": "next dev",
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "prebuild": "yarn run generate",
     "find:unused": "npx next-unused",
     "prepare": "husky install",
@@ -34,6 +34,7 @@
     "@types/react": "18.0.20",
     "@types/react-dom": "18.0.6",
     "autoprefixer": "^10.4.11",
+    "cross-env": "^7.0.3",
     "eslint": "8.23.1",
     "eslint-config-next": "12.3.0",
     "eslint-config-prettier": "^8.5.0",
