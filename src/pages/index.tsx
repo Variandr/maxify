@@ -13,7 +13,6 @@ interface Props {
 }
 
 export async function getStaticProps(context) {
-  console.log(context)
   const staticProps = await getFeedStaticProps(context)
   const props = JSON.parse(JSON.stringify(staticProps))
   return {
