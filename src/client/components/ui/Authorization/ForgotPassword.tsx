@@ -26,7 +26,7 @@ const ForgotPassword = ({ closeForgotPassword }: Props) => {
     mode: 'all',
   })
 
-  const onSubmit = (data: { email: string }) => setIsPasswordSent(true)
+  const onSubmit = () => setIsPasswordSent(true)
 
   return (
     <div className="w-[450px] h-[305px] bg-white rounded-xl font-basic flex flex-col justify-center">

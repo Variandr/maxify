@@ -2,6 +2,9 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import classnames from 'classnames'
+import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
+import { setAuthStatus } from '../../../../store/actions/profile'
 
 interface LoginData {
   email: string
@@ -20,16 +23,22 @@ const schema = yup
   .required()
 
 const AuthModal = ({ openForgotPassword }: Props) => {
+  const router = useRouter()
+  const dispatch = useDispatch()
+
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<LoginData>({
     resolver: yupResolver(schema),
-    mode: 'onBlur',
+    mode: 'all',
   })
 
-  const onSubmit = (data: LoginData) => console.log(data)
+  const onSubmit = () => {
+    dispatch(setAuthStatus(true))
+    return router.push('/')
+  }
 
   return (
     <div className="w-[375px] bg-white rounded-xl font-basic">
@@ -74,6 +83,7 @@ const AuthModal = ({ openForgotPassword }: Props) => {
           )}
           type="submit"
           disabled={!isValid}
+          onClick={onSubmit}
         >
           LOGIN
         </button>
