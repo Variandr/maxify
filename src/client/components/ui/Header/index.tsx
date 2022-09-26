@@ -5,7 +5,7 @@ import Image from 'next/image'
 const Header = () => {
   return (
     <div className=" flex justify-between items-center shadow-lg bg-white z-10 flex py-4 px-6">
-      <p className="font-bold text-xl">Deals</p>
+      <p className="font-bold text-xl">Dashboard</p>
       <div className="flex items-center">
         <Image
           src={Account}
