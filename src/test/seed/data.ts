@@ -2,13 +2,13 @@ export interface Organization {
   id: string
   name: string
   description?: string | null
-  totalIncome?: string | null
+  totalIncome?: number | null
   logoUrl?: string | null
 }
 
 export interface Income {
   date: Date
-  income: string
+  income: number
   organizationId?: string
 }
 
@@ -25,7 +25,7 @@ export interface Profile {
 
 export interface Employee {
   position: string
-  salary: string
+  salary: number
   organizationId?: string
   profileId?: string
 }
@@ -51,7 +51,7 @@ export interface Client {
 
 export interface Order {
   organizationId?: string
-  totalPrice?: string | null
+  totalPrice?: number | null
   discount?: number | null
   status: OrderStatus
   deliveryStatus: DeliveryStatus
@@ -95,47 +95,47 @@ export const testData: Seed = {
       name: 'Maxify',
       description:
         'We are Maxims! Powerful team of developers who is going to be famous soon',
-      totalIncome: '1243324',
+      totalIncome: 1243324,
     },
   ],
   incomes: [
     {
       date: new Date('September 01, 2022'),
-      income: '13000',
+      income: 13000,
     },
     {
       date: new Date('August 01, 2022'),
-      income: '7324',
+      income: 7324,
     },
     {
       date: new Date('July 01, 2022'),
-      income: '1220.12',
+      income: 1220,
     },
     {
       date: new Date('June 01, 2022'),
-      income: '2323',
+      income: 2323,
     },
     {
       date: new Date('May 01, 2022'),
-      income: '8463',
+      income: 8463,
     },
   ],
   employees: [
     {
       position: 'Junior Software Engineer',
-      salary: '600',
+      salary: 600,
     },
     {
       position: 'Software Engineer',
-      salary: '1800',
+      salary: 1800,
     },
     {
       position: 'Senior Software Engineer',
-      salary: '4000',
+      salary: 4000,
     },
     {
       position: 'CEO',
-      salary: '12000',
+      salary: 12000,
     },
   ],
   profiles: [
@@ -198,20 +198,20 @@ export const testData: Seed = {
   ],
   orders: [
     {
-      totalPrice: '190',
+      totalPrice: 190,
       status: OrderStatus.PAID,
       deliveryStatus: DeliveryStatus.IN_THE_WAY,
       discount: 5,
       product: [{ productId: 'product-1', quantity: '2' }],
     },
     {
-      totalPrice: '50',
+      totalPrice: 50,
       status: OrderStatus.UNPAID,
       deliveryStatus: DeliveryStatus.NOT_DELIVERED,
       product: [{ productId: 'product-0', quantity: '1' }],
     },
     {
-      totalPrice: '320',
+      totalPrice: 320,
       status: OrderStatus.PAID,
       deliveryStatus: DeliveryStatus.DELIVERED,
       discount: 20,

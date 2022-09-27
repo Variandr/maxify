@@ -30,7 +30,7 @@ model order {
   createdAt      DateTime       @default(now()) @map("created_at")
   updatedAt      DateTime       @default(now()) @updatedAt @map("updated_at")
   organizationId String         @map("organization_id")
-  totalPrice     String?        @map("total_price")
+  totalPrice     Int?           @map("total_price")
   discount       Int?
   status         OrderStatus    @default(PAID)
   deliveryStatus DeliveryStatus @default(DELIVERED) @map("delivery_status")
@@ -82,7 +82,7 @@ model organization {
   name        String
   logoUrl     String?    @map("logo_url")
   description String?
-  totalIncome String?    @map("total_income")
+  totalIncome Int?       @map("total_income")
   employee    employee[]
   income      income[]
   product     product[]
@@ -94,7 +94,7 @@ model organization {
 model income {
   id             String   @id @default(uuid())
   date           DateTime
-  income         String
+  income         Int
   organizationId String   @map("organization_id")
 
   organization organization @relation(fields: [organizationId], references: [id])
@@ -106,7 +106,7 @@ model employee {
   id             String   @id @default(uuid())
   createdAt      DateTime @default(now()) @map("created_at")
   position       String
-  salary         String
+  salary         Int
   organizationId String   @map("organization_id")
   profileId      String   @map("profile_id")
 
