@@ -1,17 +1,17 @@
 import React from 'react'
 import Image from 'next/image'
-import Logo from '../../../assets/logo.svg'
-import Analytics from '../../../assets/analytics.svg'
-import Employees from '../../../assets/employees.svg'
-import Orders from '../../../assets/orders.svg'
-import Products from '../../../assets/products.svg'
-import Calculator from '../../../assets/calculator.svg'
-import Report from '../../../assets/report.svg'
+import Logo from '../../assets/logo.svg'
+import Analytics from '../../assets/analytics.svg'
+import Employees from '../../assets/employees.svg'
+import Orders from '../../assets/orders.svg'
+import Products from '../../assets/products.svg'
+import Calculator from '../../assets/calculator.svg'
+import Report from '../../assets/report.svg'
 import ThemeSwitcher from '@components/ui/ThemeSwitcher'
 
 const Sidebar = () => {
   return (
-    <aside className="w-[4rem] min-h-full bg-[#343a40] flex flex-col pt-2 items-center">
+    <aside className="w-[4rem] min-h-full bg-[#343a40] flex flex-col pt-2 items-center dark:bg-black/90">
       <Image src={Logo} alt="user account" />
       <div className="flex flex-col justify-between h-full pb-5 items-center">
         <div className="flex flex-col items-center justify-center mt-6">

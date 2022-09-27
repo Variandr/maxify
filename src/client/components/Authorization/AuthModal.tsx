@@ -4,7 +4,7 @@ import * as yup from 'yup'
 import classnames from 'classnames'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
-import { setAuthStatus } from '../../../../store/actions/profile'
+import { setAuthStatus } from '../../../store/actions/profile'
 
 interface LoginData {
   email: string

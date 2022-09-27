@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
-import Header from '@components/ui/Header'
-import Sidebar from '@components/ui/Sidebar'
+import Header from '@components/Header'
+import Sidebar from '@components/Sidebar'
 import { getFeedStaticProps } from '../client/lib/feed-props'
 import { useSelector } from 'react-redux'
 import { RootState } from '../store/reducers'
@@ -40,11 +40,11 @@ const Home: NextPage = ({
   })
 
   return (
-    <div className="flex h-screen font-basic">
+    <div className="flex h-screen font-basic bg-white dark:text-neutral-100">
       <Sidebar />
       <div className="flex flex-col w-full">
         <Header />
-        <div className="h-full"></div>
+        <div className="h-full dark:bg-black/95"></div>
       </div>
     </div>
   )

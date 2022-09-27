@@ -1,5 +1,5 @@
 import React from 'react'
-import Authorization from '@components/ui/Authorization'
+import Authorization from '@components/Authorization'
 
 const Auth = () => {
   return <Authorization />
