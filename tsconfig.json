@@ -19,6 +19,7 @@
     "incremental": true,
     "paths": {
       "@components/*": ["src/client/components/*"],
+      "@assets/*": ["src/client/assets/*"],
       "@server/*": ["src/server/*"]
     }
   },

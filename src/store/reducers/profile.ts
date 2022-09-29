@@ -14,8 +14,10 @@ const initialValue: IProfile = {
 export const profileReducer = (state = initialValue, action: any) => {
   switch (action.type) {
     case SET_IS_AUTHORIZED: {
-      console.log('123')
       return { ...state, isAuth: action.payload }
+    }
+    case SET_PROFILE: {
+      return { ...state, profile: action.payload }
     }
     default:
       return state
