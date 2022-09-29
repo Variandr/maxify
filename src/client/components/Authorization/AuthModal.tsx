@@ -4,7 +4,9 @@ import * as yup from 'yup'
 import classnames from 'classnames'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
-import { setAuthStatus } from '../../../store/actions/profile'
+import { setAuthStatus, setProfile } from '../../../store/actions/profile'
+import axios from 'axios'
+import { useState } from 'react'
 
 interface LoginData {
   email: string
@@ -17,7 +19,7 @@ interface Props {
 
 const schema = yup
   .object({
-    email: yup.string().email().required(),
+    email: yup.string().email('Not valid email').required(),
     password: yup.string().required(),
   })
   .required()
@@ -25,7 +27,7 @@ const schema = yup
 const AuthModal = ({ openForgotPassword }: Props) => {
   const router = useRouter()
   const dispatch = useDispatch()
-
+  const [errorMessage, setErrorMessage] = useState<string>('')
   const {
     register,
     handleSubmit,
@@ -35,9 +37,16 @@ const AuthModal = ({ openForgotPassword }: Props) => {
     mode: 'all',
   })
 
-  const onSubmit = () => {
-    dispatch(setAuthStatus(true))
-    return router.push('/')
+  const onSubmit = async (formData) => {
+    const profile = await axios
+      .post('/api/auth/login', formData)
+      .then((res) => res.data)
+      .catch((err) => setErrorMessage(err?.response?.data?.message))
+    if (profile) {
+      dispatch(setProfile(profile))
+      dispatch(setAuthStatus(true))
+      return router.push('/')
+    }
   }
 
   return (
@@ -74,7 +83,9 @@ const AuthModal = ({ openForgotPassword }: Props) => {
         >
           Forgot password?
         </a>
-
+        {errorMessage && (
+          <p className="text-red-600 text-sm text-center">{errorMessage}</p>
+        )}
         <button
           className={classnames(
             'mt-8 w-full ease-in duration-200 text-green-100 border py-3 px-6 font-bold text-md rounded-xl',
@@ -83,7 +94,6 @@ const AuthModal = ({ openForgotPassword }: Props) => {
           )}
           type="submit"
           disabled={!isValid}
-          onClick={onSubmit}
         >
           LOGIN
         </button>
