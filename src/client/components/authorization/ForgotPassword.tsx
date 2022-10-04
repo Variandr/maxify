@@ -2,7 +2,7 @@ import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useState } from 'react'
-import ArrowLeft from '../../assets/arrow-left.svg'
+import ArrowLeft from '@assets/arrow-left.svg'
 import Image from 'next/image'
 import classnames from 'classnames'
 
