@@ -1,5 +1,5 @@
 import { Switch } from '@headlessui/react'
-import useDarkMode from '../../../lib/use-dark-mode'
+import useDarkMode from '@lib/use-dark-mode'
 import { useEffect, useState } from 'react'
 import classnames from 'classnames'
 

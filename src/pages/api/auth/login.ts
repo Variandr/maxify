@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import * as yup from 'yup'
-import ErrorService from '../../../client/lib/error-service'
-import { ErrorMessage } from '../../../client/lib/types/api'
+import ErrorService from '@lib/error-service'
+import { ErrorMessage } from '@lib/types/api'
 import prisma from '@server/db/prisma'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
@@ -31,29 +31,28 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       })
 
       if (profile) {
-        // const passwordSync = bcrypt.compareSync(
-        //   isValid.password,
-        //   profile.password
-        // )
-        // if (passwordSync) {
-        const accessToken = jwt.sign(
-          {
-            email: profile.email,
-            profileId: profile.id,
-          },
-          JWT_SECRET_TOKEN,
-          { expiresIn: '7d' }
+        const passwordSync = bcrypt.compareSync(
+          isValid.password,
+          profile.password
         )
-        res.setHeader(
-          'Set-Cookie',
-          serialize('accessToken', accessToken, { maxAge: 60 * 60 * 24 * 7 })
-        )
-        // setCookies('accessToken', accessToken, { maxAge: 60 * 60 * 24 * 7 })
-        res.status(200).json(profile)
-        // } else {
-        //   res.status(404).json({ message: ErrorMessage.INCORRECT_PASSWORD })
-        //   ErrorService.handle(ErrorMessage.INCORRECT_PASSWORD)
-        // }
+        if (passwordSync) {
+          const accessToken = jwt.sign(
+            {
+              email: profile.email,
+              profileId: profile.id,
+            },
+            JWT_SECRET_TOKEN,
+            { expiresIn: '7d' }
+          )
+          res.setHeader(
+            'Set-Cookie',
+            serialize('accessToken', accessToken, { maxAge: 60 * 60 * 24 * 7 })
+          )
+          res.status(200).json(profile)
+        } else {
+          res.status(404).json({ message: ErrorMessage.INCORRECT_PASSWORD })
+          ErrorService.handle(ErrorMessage.INCORRECT_PASSWORD)
+        }
       } else {
         res.status(404).json({ message: ErrorMessage.ACCOUNT_WAS_NOT_FOUND })
         ErrorService.handle(ErrorMessage.ACCOUNT_WAS_NOT_FOUND)

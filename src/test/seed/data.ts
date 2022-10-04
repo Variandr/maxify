@@ -145,21 +145,21 @@ export const testData: Seed = {
       surname: 'Doe',
       age: 23,
       role: Role.USER,
-      password: 'test1234',
+      password: '$2b$10$vnVEmYpdWFcf01ghfzNPAORUvKHraAgHwUU03KZy8pImqDeK559pa', //test1234
     },
     {
       email: 'test1@gmail.com',
       name: 'Admin',
       age: 25,
       role: Role.ADMIN,
-      password: 'test1234',
+      password: '$2b$10$vnVEmYpdWFcf01ghfzNPAORUvKHraAgHwUU03KZy8pImqDeK559pa', //test1234
     },
     {
       email: 'test2@gmail.com',
       name: 'Owner',
       age: 20,
       role: Role.OWNER,
-      password: 'test1234',
+      password: '$2b$10$vnVEmYpdWFcf01ghfzNPAORUvKHraAgHwUU03KZy8pImqDeK559pa', //test1234
     },
   ],
   categories: [
