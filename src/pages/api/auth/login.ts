@@ -48,17 +48,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             'Set-Cookie',
             serialize('accessToken', accessToken, { maxAge: 60 * 60 * 24 * 7 })
           )
-          res.status(200).json(profile)
+          res.status(200).send(profile)
         } else {
-          res.status(404).json({ message: ErrorMessage.INCORRECT_PASSWORD })
+          res.status(404).send({ message: ErrorMessage.INCORRECT_PASSWORD })
           ErrorService.handle(ErrorMessage.INCORRECT_PASSWORD)
         }
       } else {
-        res.status(404).json({ message: ErrorMessage.ACCOUNT_WAS_NOT_FOUND })
+        res.status(404).send({ message: ErrorMessage.ACCOUNT_WAS_NOT_FOUND })
         ErrorService.handle(ErrorMessage.ACCOUNT_WAS_NOT_FOUND)
       }
     } else {
-      res.status(400).json({ message: ErrorMessage.YOU_HAVE_INCORRECT_DATA })
+      res.status(400).send({ message: ErrorMessage.YOU_HAVE_INCORRECT_DATA })
       ErrorService.handle(ErrorMessage.YOU_HAVE_INCORRECT_DATA)
     }
   } catch (e) {
