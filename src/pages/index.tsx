@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Header from '@components/header'
 import Sidebar from '@components/sidebar'
 import { getFeedStaticProps } from '@lib/feed-props'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../store/reducers'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
@@ -14,6 +14,8 @@ import Products from '@components/products'
 import Calculator from '@components/calculator'
 import Report from '@components/report'
 import { Employee, Income, Order, Organization, Product } from '@lib/types'
+import axios from 'axios'
+import { setAuthStatus, setProfile } from '../store/actions/profile'
 
 interface Props {
   organization: Organization
@@ -40,12 +42,29 @@ const Home: NextPage = ({
   )
   const [activeModal, setModal] = useState<Modal | undefined>()
   const router = useRouter()
+  const dispatch = useDispatch()
+
+  const authenticateProfile = async () => {
+    try {
+      const profile = await axios
+        .get('/api/auth/authenticate')
+        .then((res) => res.data)
+      if (profile) {
+        dispatch(setProfile(profile))
+        dispatch(setAuthStatus(true))
+      }
+    } catch {
+      await router.push('/auth')
+    }
+  }
 
   useEffect(() => {
-    !isUserAuthorized && router.push('/auth')
-  })
+    if (!isUserAuthorized) {
+      authenticateProfile()
+    }
+  }, [])
 
-  return (
+  return !isUserAuthorized ? null : (
     <div className="flex h-screen font-basic bg-white dark:text-neutral-100">
       <Sidebar setModal={setModal} />
       <div className="flex flex-col w-full">

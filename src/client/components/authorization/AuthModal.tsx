@@ -45,7 +45,7 @@ const AuthModal = ({ openForgotPassword }: Props) => {
     if (profile) {
       dispatch(setProfile(profile))
       dispatch(setAuthStatus(true))
-      return router.push('/')
+      await router.push('/')
     }
   }
 
