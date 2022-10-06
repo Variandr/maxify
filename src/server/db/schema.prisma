@@ -111,7 +111,7 @@ model employee {
   profileId      String   @map("profile_id")
 
   organization organization @relation(fields: [organizationId], references: [id])
-  profile      profile?
+  profile      profile      @relation(fields: [profileId], references: [id])
 
   @@map("employees")
 }
@@ -125,9 +125,8 @@ model profile {
   role       Role    @default(USER)
   password   String
   avatarUrl  String? @map("avatar_url")
-  employeeId String? @unique @map("emloyee_id")
 
-  employee employee? @relation(fields: [employeeId], references: [id])
+  employee employee[]
 
   @@map("profiles")
 }

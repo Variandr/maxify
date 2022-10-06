@@ -53,4 +53,14 @@ export interface Employee {
   createdAt?: Date
   position: string
   salary: number
+  profile?: Partial<Profile>
+}
+
+export interface Profile {
+  id: string
+  name: string
+  surname?: string
+  age: number
+  avatarUrl?: string
+  email: string
 }

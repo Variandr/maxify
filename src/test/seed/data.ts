@@ -13,6 +13,7 @@ export interface Income {
 }
 
 export interface Profile {
+  id: string
   email: string
   name: string
   surname?: string | null
@@ -20,7 +21,6 @@ export interface Profile {
   role: Role
   password: string
   avatarUrl?: string | null
-  employeeId?: string | null
 }
 
 export interface Employee {
@@ -124,22 +124,27 @@ export const testData: Seed = {
     {
       position: 'Junior Software Engineer',
       salary: 600,
+      profileId: 'profile-0',
     },
     {
       position: 'Software Engineer',
       salary: 1800,
+      profileId: 'profile-2',
     },
     {
       position: 'Senior Software Engineer',
       salary: 4000,
+      profileId: 'profile-3',
     },
     {
       position: 'CEO',
       salary: 12000,
+      profileId: 'profile-1',
     },
   ],
   profiles: [
     {
+      id: 'profile-0',
       email: 'test0@gmail.com',
       name: 'John',
       surname: 'Doe',
@@ -148,6 +153,7 @@ export const testData: Seed = {
       password: '$2b$10$vnVEmYpdWFcf01ghfzNPAORUvKHraAgHwUU03KZy8pImqDeK559pa', //test1234
     },
     {
+      id: 'profile-1',
       email: 'test1@gmail.com',
       name: 'Admin',
       age: 25,
@@ -155,6 +161,25 @@ export const testData: Seed = {
       password: '$2b$10$vnVEmYpdWFcf01ghfzNPAORUvKHraAgHwUU03KZy8pImqDeK559pa', //test1234
     },
     {
+      id: 'profile-2',
+      email: 'test4@gmail.com',
+      name: 'Markus',
+      surname: 'Kane',
+      age: 23,
+      role: Role.USER,
+      password: '$2b$10$vnVEmYpdWFcf01ghfzNPAORUvKHraAgHwUU03KZy8pImqDeK559pa', //test1234
+    },
+    {
+      id: 'profile-3',
+      email: 'test3@gmail.com',
+      name: 'Vitaliy',
+      surname: 'Labzhinskiy',
+      age: 23,
+      role: Role.USER,
+      password: '$2b$10$vnVEmYpdWFcf01ghfzNPAORUvKHraAgHwUU03KZy8pImqDeK559pa', //test1234
+    },
+    {
+      id: 'profile-4',
       email: 'test2@gmail.com',
       name: 'Owner',
       age: 20,
