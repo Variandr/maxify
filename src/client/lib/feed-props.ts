@@ -32,6 +32,7 @@ export const getFeedStaticProps = async ({
             surname: true,
             age: true,
             avatarUrl: true,
+            email: true,
           },
         },
       },

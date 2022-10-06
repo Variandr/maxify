@@ -30,10 +30,10 @@ const ThemeSwitcher = () => {
       <span className="sr-only">Enable Dark Mode</span>
       <span
         className={classnames(
-          'inline-block h-6 w-6 transform rounded-full bg-white transition',
+          'inline-block h-9 w-9 transform rounded-full bg-white transition',
           {
             'translate-x-5': enabled,
-            'translate-x-1': !enabled,
+            'translate-x-[-5px]': !enabled,
           }
         )}
       />
