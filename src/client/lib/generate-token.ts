@@ -8,7 +8,6 @@ const generateToken = (profile: Profile) => {
     {
       email: profile.email,
       profileId: profile.id,
-      role: profile.role,
     },
     JWT_SECRET_TOKEN,
     { expiresIn: '7d' }

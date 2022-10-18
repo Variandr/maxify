@@ -13,7 +13,14 @@ import Orders from '@components/orders'
 import Products from '@components/products'
 import Calculator from '@components/calculator'
 import Report from '@components/report'
-import { Employee, Income, Order, Organization, Product } from '@lib/types'
+import {
+  Employee,
+  Income,
+  Order,
+  Organization,
+  Product,
+  Role,
+} from '@lib/types'
 import axios from 'axios'
 import { setAuthStatus, setProfile } from '../store/actions/profile'
 import { getProfile } from '../store/selectors/profile'
@@ -70,7 +77,7 @@ const Home: NextPage = ({
     return null
   }
 
-  return profile.role === 'OWNER' ? (
+  return profile.role === Role.OWNER ? (
     <div>Welcome back dude!</div>
   ) : (
     <div className="flex h-screen font-basic bg-white dark:text-neutral-100">
