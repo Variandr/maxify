@@ -1,8 +1,10 @@
+import { Profile } from '@lib/types'
+
 export const SET_PROFILE = 'SET_PROFILE'
 export const SET_IS_AUTHORIZED = 'SET_IS_AUTHORIZED'
 
 interface IProfile {
-  profile: any
+  profile: Profile
   isAuth: boolean
 }
 

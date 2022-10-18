@@ -3,6 +3,7 @@ import ErrorService from '@lib/error-service'
 import prisma from '@server/db/prisma'
 import jwt from 'jsonwebtoken'
 import { parse, serialize } from 'cookie'
+import generateToken from '@lib/generate-token'
 
 const JWT_SECRET_TOKEN = process.env.JWT_TOKEN
 
@@ -27,14 +28,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       })
 
       if (profile) {
-        const accessToken = jwt.sign(
-          {
-            email: profile.email,
-            profileId: profile.id,
-          },
-          JWT_SECRET_TOKEN,
-          { expiresIn: '5d' }
-        )
+        const accessToken = generateToken(profile)
         res.setHeader(
           'Set-Cookie',
           serialize('accessToken', accessToken, { maxAge: 60 * 60 * 24 * 7 })

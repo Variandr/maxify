@@ -4,10 +4,9 @@ import ErrorService from '@lib/error-service'
 import { ErrorMessage } from '@lib/types/api'
 import prisma from '@server/db/prisma'
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 import { serialize } from 'cookie'
+import generateToken from '@lib/generate-token'
 
-const JWT_SECRET_TOKEN = process.env.JWT_TOKEN
 const schema = yup
   .object()
   .shape({
@@ -36,14 +35,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           profile.password
         )
         if (passwordSync) {
-          const accessToken = jwt.sign(
-            {
-              email: profile.email,
-              profileId: profile.id,
-            },
-            JWT_SECRET_TOKEN,
-            { expiresIn: '7d' }
-          )
+          const accessToken = generateToken(profile)
           res.setHeader(
             'Set-Cookie',
             serialize('accessToken', accessToken, { maxAge: 60 * 60 * 24 * 7 })

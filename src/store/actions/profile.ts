@@ -1,20 +1,5 @@
-import { SET_IS_AUTHORIZED } from '../reducers/profile'
-
-enum Role {
-  USER = 'USER',
-  ADMIN = 'ADMIN',
-  OWNER = 'OWNER',
-}
-interface Profile {
-  id: string
-  role: Role
-  name: string
-  surname: string
-  avatarUrl: string | null
-  age?: number
-  email: string
-  employeeId: string | null
-}
+import { SET_IS_AUTHORIZED, SET_PROFILE } from '../reducers/profile'
+import { Profile } from '@lib/types'
 
 export const setAuthStatus = (status: boolean) => ({
   type: SET_IS_AUTHORIZED,
@@ -22,6 +7,6 @@ export const setAuthStatus = (status: boolean) => ({
 })
 
 export const setProfile = (profile: Profile) => ({
-  type: SET_IS_AUTHORIZED,
+  type: SET_PROFILE,
   payload: profile,
 })
