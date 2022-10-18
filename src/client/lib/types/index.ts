@@ -33,3 +33,9 @@ export interface Employee extends Partial<employee> {
 }
 
 export interface Profile extends Partial<profile> {}
+
+export enum Role {
+  USER = 'USER',
+  ADMIN = 'ADMIN',
+  OWNER = 'OWNER',
+}

@@ -19,7 +19,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     const accessToken = parse(req?.headers?.cookie ?? '')?.accessToken
-    if (accessToken) {
+    if (accessToken && JWT_SECRET_TOKEN) {
+      //@ts-ignore
       const tokenData: Token = jwt.verify(accessToken, JWT_SECRET_TOKEN)
       const profile = await prisma.profile.findUnique({
         where: {
@@ -40,8 +41,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     } else {
       res.status(404).send({})
     }
-  } catch (e) {
-    ErrorService.handle(e)
+  } catch (err) {
+    if (err instanceof Error) ErrorService.handle(err)
   }
 }
 

@@ -6,7 +6,7 @@ export const setAuthStatus = (status: boolean) => ({
   payload: status,
 })
 
-export const setProfile = (profile: Profile) => ({
+export const setProfile = (profile: Profile | null) => ({
   type: SET_PROFILE,
   payload: profile,
 })

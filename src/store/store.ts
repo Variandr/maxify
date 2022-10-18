@@ -14,3 +14,5 @@ export const store = createStore(
 const makeStore = () => store
 
 export const wrapper = createWrapper(makeStore)
+
+export type StateType = ReturnType<typeof rootReducer>

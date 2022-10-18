@@ -1,9 +1,9 @@
-import type { NextPage } from 'next'
+import { GetStaticPropsContext } from 'next'
 import Header from '@components/header'
 import Sidebar from '@components/sidebar'
 import { getFeedStaticProps } from '@lib/feed-props'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../store/reducers'
+import { RootState } from '@store/reducers'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Modal } from '@lib/types/modals'
@@ -13,10 +13,17 @@ import Orders from '@components/orders'
 import Products from '@components/products'
 import Calculator from '@components/calculator'
 import Report from '@components/report'
-import { Employee, Income, Order, Organization, Product } from '@lib/types'
+import {
+  Employee,
+  Income,
+  Order,
+  Organization,
+  Product,
+  Role,
+} from '@lib/types'
 import axios from 'axios'
-import { setAuthStatus, setProfile } from '../store/actions/profile'
-import { getProfile } from '../store/selectors/profile'
+import { setAuthStatus, setProfile } from '@store/actions/profile'
+import { getProfile } from '@store/selectors/profile'
 
 interface Props {
   organization: Organization
@@ -26,18 +33,12 @@ interface Props {
   employees: Employee[] | null
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps(context: GetStaticPropsContext<{}>) {
   const staticProps = await getFeedStaticProps(context)
   return staticProps ? JSON.parse(JSON.stringify(staticProps)) : null
 }
 
-const Home: NextPage = ({
-  organization,
-  incomes,
-  products,
-  orders,
-  employees,
-}: Props) => {
+const Home = ({ products, orders, employees }: Props) => {
   const isUserAuthorized = useSelector(
     (state: RootState) => state.profile.isAuth
   )
@@ -70,24 +71,38 @@ const Home: NextPage = ({
     return null
   }
 
-  return profile.role === 'OWNER' ? (
-    <div>Welcome back dude!</div>
-  ) : (
+  return (
     <div className="flex h-screen font-basic bg-white dark:text-neutral-100">
-      <Sidebar setModal={setModal} />
-      <div className="flex flex-col w-full">
-        <Header activeModal={activeModal} />
-        <div className="h-full dark:bg-black/95 p-5">
-          {activeModal === Modal.ANALYTICS && <Analytics />}
-          {activeModal === Modal.EMPLOYEES && (
-            <Employees employees={employees} />
-          )}
-          {activeModal === Modal.ORDERS && <Orders orders={orders} />}
-          {activeModal === Modal.PRODUCTS && <Products products={products} />}
-          {activeModal === Modal.CALCULATOR && <Calculator />}
-          {activeModal === Modal.REPORT && <Report />}
-        </div>
-      </div>
+      {profile.role === Role.OWNER ? (
+        <>
+          <Sidebar setModal={setModal} />
+          <div className="flex flex-col w-full">
+            <Header activeModal={activeModal} />
+            <div className="h-full dark:bg-black/95 p-5">
+              <div>Owner admin panel :)</div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <Sidebar setModal={setModal} />
+          <div className="flex flex-col w-full">
+            <Header activeModal={activeModal} />
+            <div className="h-full dark:bg-black/95 p-5">
+              {activeModal === Modal.ANALYTICS && <Analytics />}
+              {activeModal === Modal.EMPLOYEES && (
+                <Employees employees={employees} />
+              )}
+              {activeModal === Modal.ORDERS && <Orders orders={orders} />}
+              {activeModal === Modal.PRODUCTS && (
+                <Products products={products} />
+              )}
+              {activeModal === Modal.CALCULATOR && <Calculator />}
+              {activeModal === Modal.REPORT && <Report />}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }

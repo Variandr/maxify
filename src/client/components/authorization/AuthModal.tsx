@@ -4,7 +4,7 @@ import * as yup from 'yup'
 import classnames from 'classnames'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
-import { setAuthStatus, setProfile } from '../../../store/actions/profile'
+import { setAuthStatus, setProfile } from '@store/actions/profile'
 import axios from 'axios'
 import { useState } from 'react'
 
@@ -37,7 +37,7 @@ const AuthModal = ({ openForgotPassword }: Props) => {
     mode: 'all',
   })
 
-  const onSubmit = async (formData) => {
+  const onSubmit = async (formData: { email: string; password: string }) => {
     const profile = await axios
       .post('/api/auth/login', formData)
       .then((res) => res.data)
