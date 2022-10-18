@@ -4,7 +4,7 @@ interface Props {
   orders: Order[] | null
 }
 
-const Orders = ({ orders }: Props) => {
+const Orders = ({}: Props) => {
   return <div></div>
 }
 export default Orders

@@ -4,12 +4,12 @@ export const SET_PROFILE = 'SET_PROFILE'
 export const SET_IS_AUTHORIZED = 'SET_IS_AUTHORIZED'
 
 interface IProfile {
-  profile: Profile
+  profile: Profile | null
   isAuth: boolean
 }
 
 const initialValue: IProfile = {
-  profile: {},
+  profile: null,
   isAuth: false,
 }
 

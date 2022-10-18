@@ -2,10 +2,7 @@ import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import prisma from '@server/db/prisma'
 import { omit } from 'lodash'
 
-export const getFeedStaticProps = async ({
-  params,
-  preview,
-}: GetStaticPropsContext<{}>) => {
+export const getFeedStaticProps = async ({}: GetStaticPropsContext<{}>) => {
   try {
     const organization = await prisma.organization.findUnique({
       where: {
@@ -81,6 +78,7 @@ export const getFeedStaticProps = async ({
     }
   } catch (err) {
     console.log(err)
+    return null
   }
 }
 

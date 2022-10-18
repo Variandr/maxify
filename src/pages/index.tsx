@@ -1,9 +1,9 @@
-import type { NextPage } from 'next'
+import { GetStaticPropsContext } from 'next'
 import Header from '@components/header'
 import Sidebar from '@components/sidebar'
 import { getFeedStaticProps } from '@lib/feed-props'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../store/reducers'
+import { RootState } from '@store/reducers'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Modal } from '@lib/types/modals'
@@ -22,8 +22,8 @@ import {
   Role,
 } from '@lib/types'
 import axios from 'axios'
-import { setAuthStatus, setProfile } from '../store/actions/profile'
-import { getProfile } from '../store/selectors/profile'
+import { setAuthStatus, setProfile } from '@store/actions/profile'
+import { getProfile } from '@store/selectors/profile'
 
 interface Props {
   organization: Organization
@@ -33,18 +33,12 @@ interface Props {
   employees: Employee[] | null
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps(context: GetStaticPropsContext<{}>) {
   const staticProps = await getFeedStaticProps(context)
   return staticProps ? JSON.parse(JSON.stringify(staticProps)) : null
 }
 
-const Home: NextPage = ({
-  organization,
-  incomes,
-  products,
-  orders,
-  employees,
-}: Props) => {
+const Home = ({ products, orders, employees }: Props) => {
   const isUserAuthorized = useSelector(
     (state: RootState) => state.profile.isAuth
   )

@@ -53,8 +53,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(400).send({ message: ErrorMessage.YOU_HAVE_INCORRECT_DATA })
       ErrorService.handle(ErrorMessage.YOU_HAVE_INCORRECT_DATA)
     }
-  } catch (e) {
-    ErrorService.handle(e)
+  } catch (err) {
+    if (err instanceof Error) ErrorService.handle(err)
   }
 }
 
