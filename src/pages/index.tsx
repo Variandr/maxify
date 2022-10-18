@@ -71,24 +71,38 @@ const Home = ({ products, orders, employees }: Props) => {
     return null
   }
 
-  return profile.role === Role.OWNER ? (
-    <div>Welcome back dude!</div>
-  ) : (
+  return (
     <div className="flex h-screen font-basic bg-white dark:text-neutral-100">
-      <Sidebar setModal={setModal} />
-      <div className="flex flex-col w-full">
-        <Header activeModal={activeModal} />
-        <div className="h-full dark:bg-black/95 p-5">
-          {activeModal === Modal.ANALYTICS && <Analytics />}
-          {activeModal === Modal.EMPLOYEES && (
-            <Employees employees={employees} />
-          )}
-          {activeModal === Modal.ORDERS && <Orders orders={orders} />}
-          {activeModal === Modal.PRODUCTS && <Products products={products} />}
-          {activeModal === Modal.CALCULATOR && <Calculator />}
-          {activeModal === Modal.REPORT && <Report />}
-        </div>
-      </div>
+      {profile.role === Role.OWNER ? (
+        <>
+          <Sidebar setModal={setModal} />
+          <div className="flex flex-col w-full">
+            <Header activeModal={activeModal} />
+            <div className="h-full dark:bg-black/95 p-5">
+              <div>Owner admin panel :)</div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <Sidebar setModal={setModal} />
+          <div className="flex flex-col w-full">
+            <Header activeModal={activeModal} />
+            <div className="h-full dark:bg-black/95 p-5">
+              {activeModal === Modal.ANALYTICS && <Analytics />}
+              {activeModal === Modal.EMPLOYEES && (
+                <Employees employees={employees} />
+              )}
+              {activeModal === Modal.ORDERS && <Orders orders={orders} />}
+              {activeModal === Modal.PRODUCTS && (
+                <Products products={products} />
+              )}
+              {activeModal === Modal.CALCULATOR && <Calculator />}
+              {activeModal === Modal.REPORT && <Report />}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
