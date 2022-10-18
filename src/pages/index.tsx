@@ -16,6 +16,7 @@ import Report from '@components/report'
 import { Employee, Income, Order, Organization, Product } from '@lib/types'
 import axios from 'axios'
 import { setAuthStatus, setProfile } from '../store/actions/profile'
+import { getProfile } from '../store/selectors/profile'
 
 interface Props {
   organization: Organization
@@ -43,6 +44,7 @@ const Home: NextPage = ({
   const [activeModal, setModal] = useState<Modal | undefined>()
   const router = useRouter()
   const dispatch = useDispatch()
+  const profile = useSelector(getProfile)
 
   const authenticateProfile = async () => {
     try {
@@ -64,7 +66,13 @@ const Home: NextPage = ({
     }
   }, [])
 
-  return !isUserAuthorized ? null : (
+  if (!isUserAuthorized || !profile) {
+    return null
+  }
+
+  return profile.role === 'OWNER' ? (
+    <div>Welcome back dude!</div>
+  ) : (
     <div className="flex h-screen font-basic bg-white dark:text-neutral-100">
       <Sidebar setModal={setModal} />
       <div className="flex flex-col w-full">
