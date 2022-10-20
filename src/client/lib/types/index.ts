@@ -1,4 +1,11 @@
-import { employee, order, organization, product, profile } from '@prisma/client'
+import {
+  employee,
+  order,
+  organization,
+  product,
+  profile,
+  income,
+} from '@prisma/client'
 
 export interface Organization extends Partial<organization> {
   id: string
@@ -7,10 +14,8 @@ export interface Organization extends Partial<organization> {
   logoUrl: string | null
 }
 
-export interface Income {
+export interface Income extends income {
   id: string
-  income: number
-  date: Date
 }
 
 export interface Product extends Partial<product> {
