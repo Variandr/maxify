@@ -23,7 +23,7 @@ export interface Product extends Partial<product> {
   price: number
 }
 
-export interface Order extends Partial<order> {
+export interface Order extends order {
   product: {
     quantity: string
     productId: string

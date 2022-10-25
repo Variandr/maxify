@@ -1,18 +1,19 @@
-import { Employee, Income, Order, Product } from '@lib/types'
+import { Employee, Income, Order } from '@lib/types'
 import { useMemo } from 'react'
 import { Chart } from 'react-chartjs-2'
 import {
-  Chart as ChartJS,
-  LinearScale,
-  CategoryScale,
   BarElement,
-  PointElement,
-  LineElement,
-  Legend,
-  Tooltip,
+  CategoryScale,
+  Chart as ChartJS,
   Filler,
+  Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Tooltip,
 } from 'chart.js'
 import LinePercentageChart from '@components/analytics/LinePercentageChart'
+import { labels } from '@components/analytics/data'
 
 ChartJS.register(
   LinearScale,
@@ -28,26 +29,10 @@ ChartJS.register(
 interface Props {
   incomes: Income[] | null
   orders: Order[] | null
-  products: Product[] | null
   employees: Employee[] | null
 }
 
-const labels = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
-
-const Analytics = ({ incomes }: Props) => {
+const Analytics = ({ incomes, orders }: Props) => {
   const sortedIncomes = useMemo(
     () =>
       incomes?.sort((a, b) => {
@@ -55,6 +40,42 @@ const Analytics = ({ incomes }: Props) => {
       }),
     [incomes]
   )
+  let months = {
+    January: 0,
+    February: 0,
+    March: 0,
+    April: 0,
+    May: 0,
+    June: 0,
+    July: 0,
+    August: 0,
+    September: 0,
+    October: 0,
+    November: 0,
+    December: 0,
+  }
+  const sortedOrders = Object.fromEntries(
+    useMemo(() => {
+      orders?.map((it) => {
+        months[
+          new Date(it.createdAt).toLocaleString('default', {
+            month: 'long',
+          }) as keyof typeof months
+        ]++
+        return it
+      })
+      return Object.entries(months).filter(([key, _]) => {
+        return (
+          Number(
+            new Date(`${key} 01 2000`).toLocaleDateString(`en`, {
+              month: `numeric`,
+            })
+          ) <= Number(new Date().toLocaleDateString(`en`, { month: `numeric` }))
+        )
+      })
+    }, [orders])
+  )
+  console.log(sortedOrders)
   const incomesData = useMemo(
     () => sortedIncomes?.map((it) => it.income),
     [sortedIncomes]
@@ -74,12 +95,27 @@ const Analytics = ({ incomes }: Props) => {
   }
 
   const analyticsYear = 2022
-
   return (
     <div className="flex flex-row gap-5 flex-wrap">
-      {incomesData && incomesData.length > 0 && (
-        <LinePercentageChart incomesData={incomesData} labels={labels} />
-      )}
+      <div className="flex flex-col gap-5">
+        {incomesData && incomesData.length > 0 && (
+          <LinePercentageChart
+            incomesData={incomesData}
+            value={incomesData?.[incomesData.length - 1] + '$'}
+            name="Revenue"
+          />
+        )}
+        {sortedOrders && Object.values(sortedOrders).length > 0 && (
+          <LinePercentageChart
+            label={Object.keys(sortedOrders)}
+            incomesData={Object.values(sortedOrders)}
+            value={Object.values(sortedOrders)[
+              Object.values(sortedOrders).length - 1
+            ]!.toString()}
+            name="Orders"
+          />
+        )}
+      </div>
       {incomesData && incomesData.length > 0 && (
         <div className="shadow-lg rounded-lg p-5 w-7/12 hover:shadow-xl">
           <h2 className="text-xl font-semibold">Sales {analyticsYear}</h2>

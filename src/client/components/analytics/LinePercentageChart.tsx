@@ -1,49 +1,18 @@
 import { Line } from 'react-chartjs-2'
 import classnames from 'classnames'
 import { useMemo } from 'react'
+import { labels, percentageOptions } from '@components/analytics/data'
 
 interface Props {
   incomesData?: number[]
-  labels: string[]
-  name?: string
+  name: string
+  value: string
+  label?: string[]
 }
 
-const options = {
-  plugins: {
-    legend: {
-      display: false,
-    },
-  },
-  elements: {
-    line: {
-      tension: 0,
-      borderWidth: 2,
-      borderColor: 'rgba(152,0,255,1)',
-      fill: 'start',
-      backgroundColor: 'rgba(152,0,255,0.4)',
-    },
-    point: {
-      radius: 0,
-      hitRadius: 0,
-    },
-  },
-  scales: {
-    xAxis: {
-      display: false,
-    },
-    yAxis: {
-      display: false,
-    },
-  },
-}
-
-const LinePercentageChart = ({
-  incomesData,
-  labels,
-  name = 'Revenue',
-}: Props) => {
+const LinePercentageChart = ({ incomesData, name, value, label }: Props) => {
   const data = {
-    labels,
+    labels: label ?? labels,
     datasets: [
       {
         data: incomesData,
@@ -53,11 +22,11 @@ const LinePercentageChart = ({
 
   const percentageDif = useMemo(() => {
     if (incomesData && incomesData?.length > 1) {
-      return (
+      const dif =
         (incomesData[incomesData.length - 1]! * 100) /
           incomesData[incomesData.length - 2]! -
         100
-      )
+      return dif === Infinity ? 1000 : dif
     }
     return 0
   }, [incomesData])
@@ -66,7 +35,7 @@ const LinePercentageChart = ({
     <div className="relative items-center shadow-md rounded-lg w-96 h-40 flex hover:shadow-lg">
       <div className="flex flex-col p-6">
         <div className="opacity-75">{name}</div>
-        <div className="text-xl font-semibold">{incomesData?.[11]}$</div>
+        <div className="text-xl font-semibold">{value}</div>
         <div className="flex flex-row items-center">
           <span
             className={classnames(
@@ -110,7 +79,7 @@ const LinePercentageChart = ({
           mask: 'linear-gradient(#000, #0000)',
         }}
       >
-        <Line data={data} options={options} />
+        <Line data={data} options={percentageOptions} />
       </div>
     </div>
   )

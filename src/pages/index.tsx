@@ -94,7 +94,6 @@ const Home = ({ products, orders, employees, incomes }: Props) => {
                   incomes={incomes}
                   employees={employees}
                   orders={orders}
-                  products={products}
                 />
               )}
               {activeModal === Modal.EMPLOYEES && (
