@@ -20,7 +20,7 @@ const Sidebar = ({ setModal }: Props) => {
               onClick={() => setModal(it.name)}
               className="flex items-center py-2 cursor-pointer ease-in duration-200 hover:bg-gray-600"
             >
-              <Image src={it.url} width={60} height={40} />
+              <Image src={it.url} width={60} height={40} alt="Navbar item" />
             </button>
           ))}
         </div>
