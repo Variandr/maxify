@@ -75,7 +75,7 @@ const Analytics = ({ incomes, orders }: Props) => {
       })
     }, [orders])
   )
-  console.log(sortedOrders)
+
   const incomesData = useMemo(
     () => sortedIncomes?.map((it) => it.income),
     [sortedIncomes]
