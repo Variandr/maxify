@@ -10,7 +10,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    const accessToken = req.headers.authorization ?? ''
+    const accessToken = req.headers.authorization?.split(' ')[1]
     if (accessToken && JWT_SECRET_TOKEN) {
       // await prisma.profile.update()
     }

@@ -17,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    const accessToken = req.headers.authorization
+    const accessToken = req.headers.authorization?.split(' ')[1]
     if (accessToken && JWT_SECRET_TOKEN) {
       //@ts-ignore
       const tokenData: Token = jwt.verify(accessToken, JWT_SECRET_TOKEN)
@@ -39,6 +39,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   } catch (err) {
     if (err instanceof Error) ErrorService.handle(err)
+    res.status(404).send(err)
   }
 }
 

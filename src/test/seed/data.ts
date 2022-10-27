@@ -1,46 +1,18 @@
-export interface Organization {
-  id: string
-  name: string
-  description?: string | null
-  totalIncome?: number | null
-  logoUrl?: string | null
-}
-
-export interface Income {
-  date: Date
-  income: number
-  organizationId?: string
-}
-
-export interface Profile {
-  id: string
-  email: string
-  name: string
-  surname?: string | null
-  age?: number | null
-  role: Role
-  password: string
-  avatarUrl?: string | null
-}
-
-export interface Employee {
-  position: string
-  salary: number
-  organizationId?: string
-  profileId?: string
-}
+import {
+  DeliveryStatus,
+  Employee,
+  Gender,
+  Income,
+  Order,
+  OrderStatus,
+  Organization,
+  Product,
+  Profile,
+  Role,
+} from '../../client/lib/types'
 
 export interface Category {
   name: string
-}
-
-export interface Product {
-  id?: string
-  description?: string | null
-  name: string
-  price: number
-  categoryId?: string | null
-  organizationId?: string
 }
 
 export interface Client {
@@ -49,43 +21,15 @@ export interface Client {
   location?: string | null
 }
 
-export interface Order {
-  organizationId?: string
-  totalPrice?: number | null
-  discount?: number | null
-  status: OrderStatus
-  deliveryStatus: DeliveryStatus
-  clientId?: string | null
-  product: Record<string, string>[]
-}
-
-export enum Role {
-  USER = 'USER',
-  ADMIN = 'ADMIN',
-  OWNER = 'OWNER',
-}
-
-enum OrderStatus {
-  PAID = 'PAID',
-  UNPAID = 'UNPAID',
-  IN_PROGRESS = 'IN_PROGRESS',
-}
-
-enum DeliveryStatus {
-  DELIVERED = 'DELIVERED',
-  NOT_DELIVERED = 'NOT_DELIVERED',
-  IN_THE_WAY = 'IN_THE_WAY',
-}
-
 interface Seed {
-  organizations: Organization[]
-  incomes: Income[]
-  employees: Employee[]
-  profiles: Profile[]
-  categories: Category[]
-  products: Product[]
-  clients: Client[]
-  orders: Order[]
+  organizations: Partial<Organization>[]
+  incomes: Partial<Income>[]
+  employees: Partial<Employee>[]
+  profiles: Partial<Profile>[]
+  categories: Partial<Category>[]
+  products: Partial<Product>[]
+  clients: Partial<Client>[]
+  orders: Partial<Order>[]
 }
 
 export const testData: Seed = {
@@ -179,6 +123,11 @@ export const testData: Seed = {
       age: 23,
       role: Role.USER,
       password: '$2b$10$vnVEmYpdWFcf01ghfzNPAORUvKHraAgHwUU03KZy8pImqDeK559pa', //test1234
+      phoneNumber: '+380968454585',
+      gender: Gender.MALE,
+      birthday: new Date('12 August 2002'),
+      address: 'Zelenskiy street, 3a, 17',
+      city: 'Lviv, Ukraine',
     },
     {
       id: 'profile-1',
@@ -187,6 +136,11 @@ export const testData: Seed = {
       age: 25,
       role: Role.ADMIN,
       password: '$2b$10$vnVEmYpdWFcf01ghfzNPAORUvKHraAgHwUU03KZy8pImqDeK559pa', //test1234
+      phoneNumber: '+380968453635',
+      gender: Gender.MALE,
+      birthday: new Date('10 April 1992'),
+      address: 'Pecherskiy district, 7b, 3',
+      city: 'Kyiv, Ukraine',
     },
     {
       id: 'profile-2',
@@ -196,6 +150,11 @@ export const testData: Seed = {
       age: 23,
       role: Role.USER,
       password: '$2b$10$vnVEmYpdWFcf01ghfzNPAORUvKHraAgHwUU03KZy8pImqDeK559pa', //test1234
+      phoneNumber: '+380498453485',
+      gender: Gender.MALE,
+      birthday: new Date('14 March 1998'),
+      address: 'Zalyzhniy street, 20a/2',
+      city: 'Warsaw, Poland',
     },
     {
       id: 'profile-3',
@@ -205,6 +164,11 @@ export const testData: Seed = {
       age: 23,
       role: Role.USER,
       password: '$2b$10$vnVEmYpdWFcf01ghfzNPAORUvKHraAgHwUU03KZy8pImqDeK559pa', //test1234
+      phoneNumber: '+380968457385',
+      gender: Gender.MALE,
+      birthday: new Date('27 February 1999'),
+      address: 'Zalyzhniy street, 9b',
+      city: 'Kharkiv, Ukraine',
     },
     {
       id: 'profile-4',
@@ -213,6 +177,11 @@ export const testData: Seed = {
       age: 20,
       role: Role.OWNER,
       password: '$2b$10$vnVEmYpdWFcf01ghfzNPAORUvKHraAgHwUU03KZy8pImqDeK559pa', //test1234
+      phoneNumber: '+380643753485',
+      gender: Gender.MALE,
+      birthday: new Date('8 October 2000'),
+      address: 'Zalyzhniy street, 14',
+      city: 'Kharkiv, Ukraine',
     },
   ],
   categories: [

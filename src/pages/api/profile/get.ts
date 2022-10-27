@@ -14,7 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return
   }
   try {
-    const accessToken = req.headers.authorization ?? ''
+    const accessToken = req.headers.authorization?.split(' ')[1]
     if (accessToken && JWT_SECRET_TOKEN) {
       //@ts-ignore
       const tokenData: Token = jwt.verify(accessToken, JWT_SECRET_TOKEN)

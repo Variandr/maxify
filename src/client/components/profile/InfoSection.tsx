@@ -25,7 +25,9 @@ const InfoSection = ({ profileInfo }: Props) => {
             alt="location icon"
             className="dark:invert"
           />
-          <p className="ml-0.5 mr-5">Zhmerynka, Ukraine</p>
+          {profileInfo?.city && (
+            <p className="ml-0.5 mr-5">{profileInfo.city}</p>
+          )}
           <Image
             src={EditIcon}
             width={15}

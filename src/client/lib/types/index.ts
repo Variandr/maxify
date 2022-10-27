@@ -48,3 +48,21 @@ export enum Role {
   ADMIN = 'ADMIN',
   OWNER = 'OWNER',
 }
+
+export enum OrderStatus {
+  PAID = 'PAID',
+  UNPAID = 'UNPAID',
+  IN_PROGRESS = 'IN_PROGRESS',
+}
+
+export enum DeliveryStatus {
+  DELIVERED = 'DELIVERED',
+  NOT_DELIVERED = 'NOT_DELIVERED',
+  IN_THE_WAY = 'IN_THE_WAY',
+}
+
+export enum Gender {
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+  OTHER = 'OTHER',
+}

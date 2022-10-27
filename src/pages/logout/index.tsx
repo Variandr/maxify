@@ -1,29 +1,13 @@
-import axios from 'axios'
-import { setAuthStatus, setProfile } from '@store/actions/profile'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
 import useDarkMode from '@lib/use-dark-mode'
 
 const Logout = () => {
   useDarkMode()
   const router = useRouter()
-  const dispatch = useDispatch()
-  const logout = async () => {
-    try {
-      const data = await axios.post('/api/auth/logout').then((res) => res.data)
-      if (data.success) {
-        dispatch(setProfile(null))
-        dispatch(setAuthStatus(false))
-        localStorage.removeItem('access_token')
-      }
-    } catch {
-      await router.back()
-    }
-  }
 
   useEffect(() => {
-    logout()
+    localStorage.removeItem('access_token')
   }, [])
 
   return (

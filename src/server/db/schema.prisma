@@ -25,6 +25,12 @@ enum Role {
   OWNER
 }
 
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
 model order {
   id             String         @id @default(uuid())
   createdAt      DateTime       @default(now()) @map("created_at")
@@ -117,14 +123,19 @@ model employee {
 }
 
 model profile {
-  id         String  @id @default(uuid())
-  email      String  @unique
-  name       String
-  surname    String?
-  age        Int?
-  role       Role    @default(USER)
-  password   String
-  avatarUrl  String? @map("avatar_url")
+  id          String  @id @default(uuid())
+  email       String  @unique
+  name        String
+  surname     String?
+  age         Int?
+  role        Role    @default(USER)
+  password    String
+  phoneNumber String? @map("phone_number")
+  gender      Gender?
+  birthday    DateTime?
+  address     String?
+  city        String?
+  avatarUrl   String? @map("avatar_url")
 
   employee employee[]
 

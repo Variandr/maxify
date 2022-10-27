@@ -2,7 +2,8 @@
 
 import { Prisma } from '@prisma/client'
 import prisma from '../../server/db/prisma'
-import { Organization, testData } from './data'
+import { testData } from './data'
+import { Organization } from '../../client/lib/types'
 
 async function seedOrganization(org: Organization) {
   const categories = await Promise.all(
@@ -46,7 +47,7 @@ async function seedOrganization(org: Organization) {
         data: {
           ...it,
           organizationId: org.id,
-          profileId: profiles[i]?.id ?? profiles[0].id,
+          profileId: profiles[i]?.id ?? profiles[0]?.id,
         },
       })
     )
@@ -58,7 +59,7 @@ async function seedOrganization(org: Organization) {
         data: {
           ...it,
           organizationId: org.id,
-          categoryId: i % 2 === 0 ? categories[0].id : categories[1].id,
+          categoryId: i % 2 === 0 ? categories[0]?.id : categories[1]?.id,
         },
       })
     )
@@ -70,7 +71,7 @@ async function seedOrganization(org: Organization) {
         data: {
           ...it,
           organizationId: org.id,
-          clientId: i % 2 === 0 ? clients[0].id : clients[1].id,
+          clientId: i % 2 === 0 ? clients[0]?.id : clients[1]?.id,
         },
       })
     )
@@ -117,7 +118,7 @@ export async function reseedDatabase() {
     await wipeDatabase()
     await seedDatabase()
   } catch (err) {
-    console.error(err.message)
+    if (err instanceof Error) console.error(err.message)
   }
 }
 

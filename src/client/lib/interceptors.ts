@@ -7,7 +7,9 @@ const $authHost = axios.create({
 $authHost.interceptors.request.use(
   (config) => {
     // @ts-ignore
-    config.headers['Authorization'] = `${localStorage.getItem('access_token')}`
+    config.headers['Authorization'] = `Bearer ${localStorage.getItem(
+      'access_token'
+    )}`
     return config
   },
   (error) => {
