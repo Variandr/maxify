@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import jwt from 'jsonwebtoken'
 import prisma from '@server/db/prisma'
+import { ErrorMessage } from '@lib/types/api'
 
 const JWT_SECRET_TOKEN = process.env.JWT_TOKEN
 
@@ -27,7 +28,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       })
       res.status(200).send({ profile })
     }
-    res.status(401).send({ message: 'You need to be authorized!' })
+    res.status(401).send({ message: ErrorMessage.UNAUTHORIZED })
   } catch (err) {}
 }
 
