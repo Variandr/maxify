@@ -21,9 +21,11 @@ import {
   Product,
   Role,
 } from '@lib/types'
-import axios from 'axios'
 import { setAuthStatus, setProfile } from '@store/actions/profile'
 import { getProfile } from '@store/selectors/profile'
+import Profile from '@components/profile'
+import Settings from '@components/settings'
+import { $authHost } from '@lib/interceptors'
 
 interface Props {
   organization: Organization
@@ -49,7 +51,7 @@ const Home = ({ products, orders, employees, incomes }: Props) => {
 
   const authenticateProfile = async () => {
     try {
-      const profile = await axios
+      const profile = await $authHost
         .get('/api/auth/authenticate')
         .then((res) => res.data)
       if (profile) {
@@ -77,7 +79,7 @@ const Home = ({ products, orders, employees, incomes }: Props) => {
         <>
           <Sidebar setModal={setModal} />
           <div className="flex flex-col w-full">
-            <Header activeModal={activeModal} />
+            <Header activeModal={activeModal} setModal={setModal} />
             <div className="h-full dark:bg-black/95 p-5">
               <div>Owner admin panel :)</div>
             </div>
@@ -87,7 +89,7 @@ const Home = ({ products, orders, employees, incomes }: Props) => {
         <>
           <Sidebar setModal={setModal} />
           <div className="flex flex-col w-full">
-            <Header activeModal={activeModal} />
+            <Header activeModal={activeModal} setModal={setModal} />
             <div className="h-full dark:bg-black/95 p-5">
               {activeModal === Modal.ANALYTICS && (
                 <Analytics
@@ -105,6 +107,8 @@ const Home = ({ products, orders, employees, incomes }: Props) => {
               )}
               {activeModal === Modal.CALCULATOR && <Calculator />}
               {activeModal === Modal.REPORT && <Report />}
+              {activeModal === Modal.PROFILE && <Profile />}
+              {activeModal === Modal.SETTINGS && <Settings />}
             </div>
           </div>
         </>

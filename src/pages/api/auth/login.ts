@@ -4,7 +4,6 @@ import ErrorService from '@lib/error-service'
 import { ErrorMessage } from '@lib/types/api'
 import prisma from '@server/db/prisma'
 import bcrypt from 'bcrypt'
-import { serialize } from 'cookie'
 import generateToken from '@lib/generate-token'
 
 const schema = yup
@@ -36,11 +35,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         )
         if (passwordSync) {
           const accessToken = generateToken(profile)
-          res.setHeader(
-            'Set-Cookie',
-            serialize('accessToken', accessToken, { maxAge: 60 * 60 * 24 * 7 })
-          )
-          res.status(200).send(profile)
+          res.status(200).send({ token: accessToken })
         } else {
           res.status(404).send({ message: ErrorMessage.INCORRECT_PASSWORD })
           ErrorService.handle(ErrorMessage.INCORRECT_PASSWORD)

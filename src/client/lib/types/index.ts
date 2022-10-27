@@ -39,6 +39,10 @@ export interface Employee extends Partial<employee> {
 
 export interface Profile extends Partial<profile> {}
 
+export interface ProfileType extends Partial<profile> {
+  employee: Partial<Employee[]>
+}
+
 export enum Role {
   USER = 'USER',
   ADMIN = 'ADMIN',

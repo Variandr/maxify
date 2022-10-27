@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import { setAuthStatus, setProfile } from '@store/actions/profile'
 import axios from 'axios'
 import { useState } from 'react'
+import { $authHost } from '@lib/interceptors'
 
 interface LoginData {
   email: string
@@ -38,10 +39,14 @@ const AuthModal = ({ openForgotPassword }: Props) => {
   })
 
   const onSubmit = async (formData: { email: string; password: string }) => {
-    const profile = await axios
+    await axios
       .post('/api/auth/login', formData)
-      .then((res) => res.data)
+      .then((res) => localStorage.setItem('access_token', res.data?.token))
       .catch((err) => setErrorMessage(err?.response?.data?.message))
+
+    const profile = await $authHost
+      .get('/api/auth/authenticate')
+      .then((res) => res.data)
     if (profile) {
       dispatch(setProfile(profile))
       dispatch(setAuthStatus(true))

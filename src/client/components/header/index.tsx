@@ -1,27 +1,24 @@
 import React, { Fragment } from 'react'
 import Account from '@assets/account.svg'
 import Image from 'next/image'
-import { Modal } from '@lib/types/modals'
+import { Modal, userModals } from '@lib/types/modals'
 import { Menu, Transition } from '@headlessui/react'
 
 interface Props {
   activeModal?: Modal
+  setModal: (modal: Modal) => void
 }
 
-const links = [
-  { href: '/settings', label: 'Settings' },
-  { href: '/profile', label: 'Profile' },
-  { href: '/logout', label: 'Logout' },
-]
+const LOGOUT_URL = '/logout'
 
-const Header = ({ activeModal }: Props) => {
+const Header = ({ activeModal, setModal }: Props) => {
   return (
     <div className="flex justify-between items-center shadow-lg dark:bg-black/90 z-10 flex py-4 px-6">
       <p className="font-bold text-xl">{activeModal ?? 'Dashboard'}</p>
       <Menu>
         <div>
           <Menu.Button>
-            <div className="flex items-center">
+            <div className="flex items-center justify-center">
               <Image
                 src={Account}
                 alt="user account"
@@ -43,18 +40,22 @@ const Header = ({ activeModal }: Props) => {
         >
           <Menu.Items className="dark:bg-neutral-800 absolute rounded-md shadow-xl right-4 top-20">
             <div className="px-6 py-2 flex flex-col">
-              {links.map((link) => (
-                <Menu.Item key={link.href} as={Fragment}>
-                  {({ active }) => (
-                    <a
-                      href={link.href}
-                      className={`${active && 'text-amber-400'}`}
-                    >
-                      {link.label}
-                    </a>
-                  )}
+              {userModals?.map((it) => (
+                <Menu.Item key={it.name} as={Fragment}>
+                  <a
+                    onClick={() => setModal(it.name)}
+                    className="hover:text-amber-400 cursor-pointer"
+                  >
+                    {it.name}
+                  </a>
                 </Menu.Item>
               ))}
+              <a
+                href={LOGOUT_URL}
+                className="hover:text-amber-400 cursor-pointer"
+              >
+                Logout
+              </a>
             </div>
           </Menu.Items>
         </Transition>

@@ -15,6 +15,7 @@ const Logout = () => {
       if (data.success) {
         dispatch(setProfile(null))
         dispatch(setAuthStatus(false))
+        localStorage.removeItem('access_token')
       }
     } catch {
       await router.back()
