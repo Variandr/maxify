@@ -38,7 +38,7 @@ export async function getStaticProps(context: GetStaticPropsContext<{}>) {
   return staticProps ? JSON.parse(JSON.stringify(staticProps)) : null
 }
 
-const Home = ({ products, orders, employees }: Props) => {
+const Home = ({ products, orders, employees, incomes }: Props) => {
   const isUserAuthorized = useSelector(
     (state: RootState) => state.profile.isAuth
   )
@@ -89,7 +89,13 @@ const Home = ({ products, orders, employees }: Props) => {
           <div className="flex flex-col w-full">
             <Header activeModal={activeModal} />
             <div className="h-full dark:bg-black/95 p-5">
-              {activeModal === Modal.ANALYTICS && <Analytics />}
+              {activeModal === Modal.ANALYTICS && (
+                <Analytics
+                  incomes={incomes}
+                  employees={employees}
+                  orders={orders}
+                />
+              )}
               {activeModal === Modal.EMPLOYEES && (
                 <Employees employees={employees} />
               )}

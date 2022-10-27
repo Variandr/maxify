@@ -109,15 +109,43 @@ export const testData: Seed = {
     },
     {
       date: new Date('July 01, 2022'),
-      income: 1220,
+      income: 6000,
     },
     {
       date: new Date('June 01, 2022'),
-      income: 2323,
+      income: 500,
     },
     {
       date: new Date('May 01, 2022'),
-      income: 8463,
+      income: 4000,
+    },
+    {
+      date: new Date('April 01, 2022'),
+      income: 5000,
+    },
+    {
+      date: new Date('March 01, 2022'),
+      income: 3750,
+    },
+    {
+      date: new Date('February 01, 2022'),
+      income: 1200,
+    },
+    {
+      date: new Date('January 01, 2022'),
+      income: 800,
+    },
+    {
+      date: new Date('December 01, 2022'),
+      income: 20000,
+    },
+    {
+      date: new Date('November 01, 2022'),
+      income: 12500,
+    },
+    {
+      date: new Date('October 01, 2022'),
+      income: 15000,
     },
   ],
   employees: [
