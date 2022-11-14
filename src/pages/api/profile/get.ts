@@ -1,26 +1,18 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import jwt from 'jsonwebtoken'
 import prisma from '@server/db/prisma'
 import { ErrorMessage } from '@lib/types/api'
-
-const JWT_SECRET_TOKEN = process.env.JWT_TOKEN
-
-interface Token {
-  email: string
-}
+import ErrorService from '@lib/error-service'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'GET') {
     return
   }
   try {
-    const accessToken = req.headers.authorization?.split(' ')[1]
-    if (accessToken && JWT_SECRET_TOKEN) {
-      //@ts-ignore
-      const tokenData: Token = jwt.verify(accessToken, JWT_SECRET_TOKEN)
+    if (req.query) {
       const profile = await prisma.profile.findUnique({
         where: {
-          email: tokenData?.email,
+          //@ts-ignore
+          email: req.query.email,
         },
         include: {
           employee: true,
@@ -29,7 +21,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(200).send({ profile })
     }
     res.status(401).send({ message: ErrorMessage.UNAUTHORIZED })
-  } catch (err) {}
+  } catch (err) {
+    if (err instanceof Error) ErrorService.handle(err)
+    res.status(500).send(err)
+  }
 }
 
 export default handler

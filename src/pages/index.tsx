@@ -65,7 +65,7 @@ const Home = ({ products, orders, employees, incomes }: Props) => {
 
   useEffect(() => {
     if (!isUserAuthorized) {
-      authenticateProfile()
+      void authenticateProfile()
     }
   }, [])
 
@@ -107,7 +107,9 @@ const Home = ({ products, orders, employees, incomes }: Props) => {
               )}
               {activeModal === Modal.CALCULATOR && <Calculator />}
               {activeModal === Modal.REPORT && <Report />}
-              {activeModal === Modal.PROFILE && <Profile />}
+              {activeModal === Modal.PROFILE && (
+                <Profile profileEmail={profile.email} />
+              )}
               {activeModal === Modal.SETTINGS && <Settings />}
             </div>
           </div>

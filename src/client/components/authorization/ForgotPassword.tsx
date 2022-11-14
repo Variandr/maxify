@@ -5,6 +5,7 @@ import { useState } from 'react'
 import ArrowLeft from '@assets/arrow-left.svg'
 import Image from 'next/image'
 import classnames from 'classnames'
+import axios from 'axios'
 
 const schema = yup.object({
   email: yup.string().email().required(),
@@ -12,6 +13,10 @@ const schema = yup.object({
 
 interface Props {
   closeForgotPassword: () => void
+}
+
+interface SubmitData {
+  email: string
 }
 
 const ForgotPassword = ({ closeForgotPassword }: Props) => {
@@ -26,7 +31,18 @@ const ForgotPassword = ({ closeForgotPassword }: Props) => {
     mode: 'all',
   })
 
-  const onSubmit = () => setIsPasswordSent(true)
+  const onSubmit = async ({ email }: SubmitData) => {
+    try {
+      const res = await axios.post('/api/auth/reset', {
+        email,
+        host: window.location.origin,
+      })
+      console.log(res)
+      setIsPasswordSent(true)
+    } catch (err) {
+      setIsPasswordSent(false)
+    }
+  }
 
   return (
     <div className="w-[450px] h-[305px] bg-white rounded-xl font-basic flex flex-col justify-center">
