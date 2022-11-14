@@ -4,11 +4,14 @@ import { ProfileType } from '@lib/types'
 import { $authHost } from '@lib/interceptors'
 import { useEffect, useState } from 'react'
 
-const Profile = () => {
+interface Props {
+  profileEmail?: string
+}
+const Profile = ({ profileEmail }: Props) => {
   const [profileInfo, setProfileInfo] = useState<ProfileType | null>(null)
   const getProfileInfo = async (): Promise<{ profile: ProfileType }> => {
     return await $authHost
-      .get<{ profile: ProfileType }>('/api/profile/get')
+      .get(`/api/profile/get?email=${profileEmail}`)
       .then((res) => res.data)
   }
 

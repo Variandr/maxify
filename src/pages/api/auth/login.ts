@@ -50,6 +50,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   } catch (err) {
     if (err instanceof Error) ErrorService.handle(err)
+    res.status(500).send(err)
   }
 }
 
