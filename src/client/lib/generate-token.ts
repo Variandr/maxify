@@ -1,9 +1,10 @@
 import jwt from 'jsonwebtoken'
 import { Profile } from '@lib/types'
+import { profile } from '@prisma/client'
 
 const JWT_SECRET_TOKEN = process.env.JWT_TOKEN
 
-const generateToken = (profile: Profile) => {
+const generateToken = (profile: Profile | profile) => {
   return JWT_SECRET_TOKEN
     ? jwt.sign(
         {

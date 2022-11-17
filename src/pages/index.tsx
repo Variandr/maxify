@@ -11,8 +11,6 @@ import Analytics from '@components/analytics'
 import Employees from '@components/employees'
 import Orders from '@components/orders'
 import Products from '@components/products'
-import Calculator from '@components/calculator'
-import Report from '@components/report'
 import {
   Employee,
   Income,
@@ -44,7 +42,7 @@ const Home = ({ products, orders, employees, incomes }: Props) => {
   const isUserAuthorized = useSelector(
     (state: RootState) => state.profile.isAuth
   )
-  const [activeModal, setModal] = useState<Modal | undefined>()
+  const [activeModal, setModal] = useState<Modal | undefined>(Modal.ANALYTICS)
   const router = useRouter()
   const dispatch = useDispatch()
   const profile = useSelector(getProfile)
@@ -99,14 +97,12 @@ const Home = ({ products, orders, employees, incomes }: Props) => {
                 />
               )}
               {activeModal === Modal.EMPLOYEES && (
-                <Employees employees={employees} />
+                <Employees employees={employees} role={profile.role} />
               )}
               {activeModal === Modal.ORDERS && <Orders orders={orders} />}
               {activeModal === Modal.PRODUCTS && (
                 <Products products={products} />
               )}
-              {activeModal === Modal.CALCULATOR && <Calculator />}
-              {activeModal === Modal.REPORT && <Report />}
               {activeModal === Modal.PROFILE && (
                 <Profile profileEmail={profile.email} />
               )}
