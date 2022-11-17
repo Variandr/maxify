@@ -22,7 +22,7 @@ const InfoSection = ({ profileInfo }: Props) => {
             src={LocationIcon}
             width={15}
             height={15}
-            alt="location icon"
+            alt="location"
             className="dark:invert"
           />
           {profileInfo?.city && (
@@ -32,7 +32,7 @@ const InfoSection = ({ profileInfo }: Props) => {
             src={EditIcon}
             width={15}
             height={15}
-            alt="location icon"
+            alt="edit name"
             className="dark:invert cursor-pointer"
           />
         </div>

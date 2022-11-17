@@ -37,7 +37,9 @@ export interface Employee extends Partial<employee> {
   profile?: Partial<Profile>
 }
 
-export interface Profile extends Partial<profile> {}
+export interface Profile extends Partial<profile> {
+  role: Role
+}
 
 export interface ProfileType extends Partial<profile> {
   employee: Partial<Employee[]>
