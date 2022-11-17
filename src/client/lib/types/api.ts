@@ -4,6 +4,7 @@ export enum ErrorMessage {
   ACCOUNT_WAS_NOT_FOUND_V2 = 'This account was not found',
   INCORRECT_PASSWORD = 'You`ve got incorrect password',
   UNAUTHORIZED = 'You need to be authorized!',
+  NOT_ENOUGH_PERMISSIONS = 'You don`t have permission for this operation',
 }
 
 export enum InfoMessage {

@@ -2,9 +2,10 @@ import { Profile } from '@lib/types'
 import Image from 'next/image'
 import Logo from '@assets/logo.svg'
 import React from 'react'
+import { profile } from '@prisma/client'
 
 interface Props {
-  profile: Profile
+  profile: Profile | profile
   link: string
 }
 
