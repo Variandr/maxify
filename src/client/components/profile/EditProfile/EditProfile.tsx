@@ -15,17 +15,13 @@ interface Props {
 const EditProfile = ({ setModal }: Props) => {
   const profile = useSelector(getProfile)
 
-  const [name, setName] = useState(profile.name ? profile.name : '')
-  const [surname, setSurname] = useState(profile.surname ? profile.surname : '')
-  const [phoneNumber, setPhoneNumber] = useState(
-    profile.phoneNumber ? profile.phoneNumber : ''
-  )
-  const [address, setAddress] = useState(profile.address ? profile.address : '')
-  const [location, setLocation] = useState(profile.city ? profile.city : '')
-  const [birthday, setBirthDay] = useState(
-    profile.birthday ? profile.birthday : ''
-  )
-  const [email, setEmail] = useState(profile.email ? profile.email : '')
+  const [name, setName] = useState(profile.name ?? '')
+  const [surname, setSurname] = useState(profile.surname ?? '')
+  const [phoneNumber, setPhoneNumber] = useState(profile.phoneNumber ?? '')
+  const [address, setAddress] = useState(profile.address ?? '')
+  const [location, setLocation] = useState(profile.city ?? '')
+  const [birthday, setBirthDay] = useState(profile.birthday ?? '')
+  const [email, setEmail] = useState(profile.email ?? '')
   const dispatch = useDispatch()
   const [errorMessage, setErrorMessage] = useState('')
 
