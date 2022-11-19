@@ -31,8 +31,6 @@ const LinePercentageChart = ({ incomesData, name, value, label }: Props) => {
     return 0
   }, [incomesData])
 
-  console.log(incomesData)
-
   return (
     <div className="relative items-center shadow-md rounded-lg w-96 h-40 flex hover:shadow-lg">
       <div className="flex flex-col p-6">
