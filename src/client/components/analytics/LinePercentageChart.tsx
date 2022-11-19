@@ -26,10 +26,12 @@ const LinePercentageChart = ({ incomesData, name, value, label }: Props) => {
         (incomesData[incomesData.length - 1]! * 100) /
           incomesData[incomesData.length - 2]! -
         100
-      return dif === Infinity ? 1000 : dif
+      return dif === Infinity ? 1000 : !isNaN(dif) ? dif : 0
     }
     return 0
   }, [incomesData])
+
+  console.log(incomesData)
 
   return (
     <div className="relative items-center shadow-md rounded-lg w-96 h-40 flex hover:shadow-lg">
