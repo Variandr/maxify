@@ -1,10 +1,11 @@
-// import ProfileDefaultIcon from '@assets/employee-no-avatar.svg'
 import ProfileTest from '@assets/profileTest.jpg'
 import Image from 'next/image'
 import classnames from 'classnames'
+import { getProfile } from '@store/selectors/profile'
+import { useSelector } from 'react-redux'
 
 const MainSection = () => {
-  const profileExist = true
+  const profileImage = useSelector(getProfile).avatarUrl
 
   return (
     <div className="flex flex-col">
@@ -16,20 +17,9 @@ const MainSection = () => {
           width={300}
           objectFit="cover"
           className={classnames('relative rounded', {
-            'dark:invert rounded-full': !profileExist,
+            'dark:invert rounded-full': profileImage,
           })}
         />
-        <p
-          className={classnames(
-            'absolute inset-0 text-white bg-black/70 text-center flex flex-col items-center justify-center opacity-0 hover:opacity-100 bg-opacity-90 duration-300 cursor-pointer',
-            {
-              rounded: profileExist,
-              'rounded-full': !profileExist,
-            }
-          )}
-        >
-          Change photo
-        </p>
       </div>
 
       <div className="mt-6 flex flex-col">

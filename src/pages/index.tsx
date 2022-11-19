@@ -24,6 +24,7 @@ import { getProfile } from '@store/selectors/profile'
 import Profile from '@components/profile'
 import Settings from '@components/settings'
 import { $authHost } from '@lib/interceptors'
+import EditProfile from '@components/profile/EditProfile/EditProfile'
 
 interface Props {
   organization: Organization
@@ -88,7 +89,7 @@ const Home = ({ products, orders, employees, incomes }: Props) => {
           <Sidebar setModal={setModal} />
           <div className="flex flex-col w-full">
             <Header activeModal={activeModal} setModal={setModal} />
-            <div className="h-full dark:bg-black/95 p-5">
+            <div className="h-full dark:bg-black/95 p-5 flex flex-col h-full">
               {activeModal === Modal.ANALYTICS && (
                 <Analytics
                   incomes={incomes}
@@ -104,7 +105,10 @@ const Home = ({ products, orders, employees, incomes }: Props) => {
                 <Products products={products} />
               )}
               {activeModal === Modal.PROFILE && (
-                <Profile profileEmail={profile.email} />
+                <Profile profileEmail={profile.email} setModal={setModal} />
+              )}
+              {activeModal === Modal.EDIT_PROFILE && (
+                <EditProfile setModal={setModal} />
               )}
               {activeModal === Modal.SETTINGS && <Settings />}
             </div>
