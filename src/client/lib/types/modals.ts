@@ -13,6 +13,7 @@ export enum Modal {
   CALCULATOR = 'Calculator',
   REPORT = 'Report',
   PROFILE = 'Profile',
+  EDIT_PROFILE = 'Edit Profile',
   SETTINGS = 'Settings',
 }
 
@@ -43,11 +44,4 @@ export const modals = [
   },*/
 ]
 
-export const userModals = [
-  {
-    name: Modal.PROFILE,
-  },
-  {
-    name: Modal.SETTINGS,
-  },
-]
+export const userModals = [{ name: Modal.PROFILE }, { name: Modal.SETTINGS }]

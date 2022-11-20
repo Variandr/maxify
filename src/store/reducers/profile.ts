@@ -2,6 +2,7 @@ import { Profile } from '@lib/types'
 
 export const SET_PROFILE = 'SET_PROFILE'
 export const SET_IS_AUTHORIZED = 'SET_IS_AUTHORIZED'
+export const UPDATE_PROFILE = 'UPDATE_PROFILE'
 
 interface IProfile {
   profile: Profile | null
@@ -19,6 +20,9 @@ export const profileReducer = (state = initialValue, action: any) => {
       return { ...state, isAuth: action.payload }
     }
     case SET_PROFILE: {
+      return { ...state, profile: action.payload }
+    }
+    case UPDATE_PROFILE: {
       return { ...state, profile: action.payload }
     }
     default:
