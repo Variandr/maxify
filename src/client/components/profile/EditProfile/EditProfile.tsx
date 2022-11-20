@@ -89,7 +89,9 @@ const EditProfile = ({ setModal }: Props) => {
               <label>Birthday</label>
               <input
                 // @ts-ignore
-                value={new Date(birthday).toISOString().split('T')[0]}
+                value={
+                  birthday ?? new Date(birthday).toISOString().split('T')[0]
+                }
                 type="date"
                 placeholder="Change your birthday"
                 className=" rounded dark:text-white bg-transparent outline-0 px-3 py-1"
