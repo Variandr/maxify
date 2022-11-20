@@ -3,12 +3,14 @@ import InfoSection from '@components/profile/InfoSection'
 import { ProfileType } from '@lib/types'
 import { useEffect, useState } from 'react'
 import getProfile from '@lib/get-profile'
+import { Modal } from '@lib/types/modals'
 
 interface Props {
   email?: string
+  setModal: (modal: Modal) => void
 }
 
-const Profile = ({ email }: Props) => {
+const Profile = ({ email, setModal }: Props) => {
   const [profileInfo, setProfileInfo] = useState<ProfileType | null>(null)
   const getProfileByEmail = async () => {
     const profile = email ? await getProfile(email) : null
@@ -24,7 +26,7 @@ const Profile = ({ email }: Props) => {
   return (
     <div className="flex px-10 py-8">
       <MainSection />
-      <InfoSection profileInfo={profileInfo} />
+      <InfoSection profileInfo={profileInfo} setModal={setModal} />
     </div>
   )
 }

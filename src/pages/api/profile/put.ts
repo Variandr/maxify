@@ -37,9 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           },
           data: req.body,
         })
-        return (
-          updatedProfile && res.status(200).send({ profile: updatedProfile })
-        )
+        res.status(200).send({ profile: updatedProfile })
       } else {
         res.status(400).send({ message: ErrorMessage.YOU_HAVE_INCORRECT_DATA })
       }
