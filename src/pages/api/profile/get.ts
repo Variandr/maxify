@@ -18,7 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           employee: true,
         },
       })
-      res.status(200).send({ profile })
+      res.status(200).send(profile)
     }
     res.status(401).send({ message: ErrorMessage.UNAUTHORIZED })
   } catch (err) {

@@ -11,14 +11,7 @@ import Analytics from '@components/analytics'
 import Employees from '@components/employees'
 import Orders from '@components/orders'
 import Products from '@components/products'
-import {
-  Employee,
-  Income,
-  Order,
-  Organization,
-  Product,
-  Role,
-} from '@lib/types'
+import { Income, Order, Organization, Product, Role } from '@lib/types'
 import { setAuthStatus, setProfile } from '@store/actions/profile'
 import { getProfile } from '@store/selectors/profile'
 import Profile from '@components/profile'
@@ -30,7 +23,6 @@ interface Props {
   incomes: Income[] | null
   orders: Order[] | null
   products: Product[] | null
-  employees: Employee[] | null
 }
 
 export async function getStaticProps(context: GetStaticPropsContext<{}>) {
@@ -38,7 +30,7 @@ export async function getStaticProps(context: GetStaticPropsContext<{}>) {
   return staticProps ? JSON.parse(JSON.stringify(staticProps)) : null
 }
 
-const Home = ({ products, orders, employees, incomes }: Props) => {
+const Home = ({ products, orders, incomes, organization }: Props) => {
   const isUserAuthorized = useSelector(
     (state: RootState) => state.profile.isAuth
   )
@@ -90,21 +82,20 @@ const Home = ({ products, orders, employees, incomes }: Props) => {
             <Header activeModal={activeModal} setModal={setModal} />
             <div className="h-full dark:bg-black/95 p-5">
               {activeModal === Modal.ANALYTICS && (
-                <Analytics
-                  incomes={incomes}
-                  employees={employees}
-                  orders={orders}
-                />
+                <Analytics incomes={incomes} orders={orders} />
               )}
               {activeModal === Modal.EMPLOYEES && (
-                <Employees employees={employees} role={profile.role} />
+                <Employees
+                  role={profile.role}
+                  organizationId={organization.id}
+                />
               )}
               {activeModal === Modal.ORDERS && <Orders orders={orders} />}
               {activeModal === Modal.PRODUCTS && (
                 <Products products={products} />
               )}
               {activeModal === Modal.PROFILE && (
-                <Profile profileEmail={profile.email} />
+                <Profile email={profile.email} />
               )}
               {activeModal === Modal.SETTINGS && <Settings />}
             </div>

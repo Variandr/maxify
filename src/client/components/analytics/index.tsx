@@ -1,4 +1,4 @@
-import { Employee, Income, Order } from '@lib/types'
+import { Income, Order } from '@lib/types'
 import { useMemo } from 'react'
 import { Chart } from 'react-chartjs-2'
 import {
@@ -29,7 +29,6 @@ ChartJS.register(
 interface Props {
   incomes: Income[] | null
   orders: Order[] | null
-  employees: Employee[] | null
 }
 
 const Analytics = ({ incomes, orders }: Props) => {

@@ -34,7 +34,8 @@
       "@assets/*": ["src/client/assets/*"],
       "@lib/*": ["src/client/lib/*"],
       "@server/*": ["src/server/*"],
-      "@store/*": ["src/store/*"]
+      "@store/*": ["src/store/*"],
+      "@pages/*": ["src/pages/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.d.ts", "**/*.ts", "**/*.tsx", "**/*.js"],
