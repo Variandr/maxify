@@ -1,25 +1,27 @@
 import MainSection from '@components/profile/MainSection'
 import InfoSection from '@components/profile/InfoSection'
 import { ProfileType } from '@lib/types'
-import { $authHost } from '@lib/interceptors'
 import { useEffect, useState } from 'react'
+import getProfile from '@lib/get-profile'
 import { Modal } from '@lib/types/modals'
 
 interface Props {
-  profileEmail?: string
+  email?: string
   setModal: (modal: Modal) => void
 }
-const Profile = ({ profileEmail, setModal }: Props) => {
+
+const Profile = ({ email, setModal }: Props) => {
   const [profileInfo, setProfileInfo] = useState<ProfileType | null>(null)
-  const getProfileInfo = async (): Promise<{ profile: ProfileType }> => {
-    return await $authHost
-      .get(`/api/profile/get?email=${profileEmail}`)
-      .then((res) => res.data)
+  const getProfileByEmail = async () => {
+    const profile = email ? await getProfile(email) : null
+    if (profile) {
+      setProfileInfo(profile)
+    }
   }
 
   useEffect(() => {
-    getProfileInfo().then((data) => setProfileInfo(data.profile))
-  }, [])
+    void getProfileByEmail()
+  }, [email])
 
   return (
     <div className="flex px-10 py-8">

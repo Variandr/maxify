@@ -3,12 +3,12 @@ import ErrorService from '@lib/error-service'
 import { ErrorMessage } from '@lib/types/api'
 import jwt from 'jsonwebtoken'
 import prisma from '@server/db/prisma'
-import { Role } from '@lib/types'
+import { omit } from 'lodash'
 
 const JWT_SECRET_TOKEN = process.env.JWT_TOKEN
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method != 'DELETE') {
+  if (req.method != 'GET') {
     return
   }
 
@@ -22,21 +22,35 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           email: tokenData?.email,
         },
       })
-      if (profile && profile.role !== Role.USER) {
-        const removedEmployee = await prisma.employee.delete({
+
+      if (profile) {
+        const employees = await prisma.employee.findMany({
           where: {
-            id: req.query?.employeeId as string,
+            organizationId: req.query.organizationId as string,
+          },
+          include: {
+            profile: {
+              select: {
+                name: true,
+                surname: true,
+                age: true,
+                avatarUrl: true,
+                email: true,
+                phoneNumber: true,
+                city: true,
+                gender: true,
+                birthday: true,
+                address: true,
+              },
+            },
           },
         })
-        await prisma.profile.delete({
-          where: {
-            id: removedEmployee.profileId,
-          },
-        })
-        res.status(200).send(removedEmployee)
-      } else {
-        res.status(403).send({ message: ErrorMessage.NOT_ENOUGH_PERMISSIONS })
-      }
+
+        const employeesMap = employees?.map((it) =>
+          omit(it, ['organizationId', 'profileId'])
+        )
+        res.status(200).send(employeesMap)
+      } else res.status(404).send({ message: ErrorMessage.UNAUTHORIZED })
     } else res.status(401).send({ message: ErrorMessage.UNAUTHORIZED })
   } catch (err) {
     if (err instanceof Error) ErrorService.handle(err)

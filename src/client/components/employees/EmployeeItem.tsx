@@ -5,17 +5,38 @@ import classnames from 'classnames'
 import EditIcon from '@assets/edit.svg'
 import DeleteIcon from '@assets/delete.svg'
 import { useState } from 'react'
+import deleteEmployee from '@lib/delete-employee'
 
 interface Props {
   employee: Employee
   idx: number
   role?: Role
+  setEmployees: (employee: Employee[]) => void
+  employees?: Employee[]
+  setEditingEmployee: (employee: Employee) => void
 }
 
-const EmployeeItem = ({ employee, idx, role }: Props) => {
+const EmployeeItem = ({
+  employee,
+  idx,
+  role,
+  setEmployees,
+  employees,
+  setEditingEmployee,
+}: Props) => {
   const { profile } = employee
   const [isVisible, setVisible] = useState(false)
   const fullName = profile?.name + ' ' + (profile?.surname ?? '')
+
+  const removeEmployee = async () => {
+    const removedEmployee = await deleteEmployee(employee.id)
+    if (removedEmployee) {
+      const updatedEmployees = employees
+        ? employees?.filter((it) => it.id !== removedEmployee.id)
+        : []
+      setEmployees(updatedEmployees)
+    }
+  }
 
   return (
     <div
@@ -42,11 +63,12 @@ const EmployeeItem = ({ employee, idx, role }: Props) => {
       <div className="w-2/12">{employee.position}</div>
       <div className="w-1/12">{employee.salary}</div>
       <div className="w-1/12">{profile?.age}</div>
-      <div className="w-2/12">{profile?.email}</div>
+      <div className="w-3/12">{profile?.email}</div>
       <div className="w-1/12 mt-2">
         {Role.USER !== role && isVisible && (
           <div className="flex gap-5">
             <Image
+              onClick={() => setEditingEmployee(employee)}
               src={EditIcon}
               width={28}
               height={28}
@@ -54,10 +76,11 @@ const EmployeeItem = ({ employee, idx, role }: Props) => {
               className="dark:invert cursor-pointer"
             />
             <Image
+              onClick={removeEmployee}
               src={DeleteIcon}
               width={28}
               height={28}
-              alt="edit employee"
+              alt="remove employee"
               className="dark:invert cursor-pointer"
             />
           </div>
