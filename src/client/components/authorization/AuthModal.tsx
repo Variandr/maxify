@@ -38,7 +38,7 @@ const AuthModal = ({ openForgotPassword }: Props) => {
     mode: 'all',
   })
 
-  const onSubmit = async (formData: { email: string; password: string }) => {
+  const onSubmit = async (formData: LoginData) => {
     await axios
       .post('/api/auth/login', formData)
       .then((res) => localStorage.setItem('access_token', res.data?.token))

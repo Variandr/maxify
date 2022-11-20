@@ -18,31 +18,6 @@ export const getFeedStaticProps = async ({}: GetStaticPropsContext<{}>) => {
     })
     const incomesMap = incomes?.map((it) => omit(it, 'organizationId'))
 
-    const employees = await prisma.employee.findMany({
-      where: {
-        organizationId: organization.id,
-      },
-      include: {
-        profile: {
-          select: {
-            name: true,
-            surname: true,
-            age: true,
-            avatarUrl: true,
-            email: true,
-            phoneNumber: true,
-            city: true,
-            gender: true,
-            birthday: true,
-            address: true,
-          },
-        },
-      },
-    })
-    const employeesMap = employees?.map((it) =>
-      omit(it, ['organizationId', 'profileId'])
-    )
-
     const orders = await prisma.order.findMany({
       where: {
         organizationId: organization.id,
@@ -76,7 +51,6 @@ export const getFeedStaticProps = async ({}: GetStaticPropsContext<{}>) => {
       props: {
         organization,
         incomes: incomesMap ?? [],
-        employees: employeesMap ?? [],
         products: productMap ?? [],
         orders: ordersMap ?? [],
       },

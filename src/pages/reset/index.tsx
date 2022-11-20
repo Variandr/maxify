@@ -41,7 +41,7 @@ const ResetPassword = () => {
     mode: 'all',
   })
 
-  const onSubmit = async (formData: { password: string }) => {
+  const onSubmit = async (formData: ResetForm) => {
     try {
       const data = await axios
         .put('/api/auth/reset/changePassword', {

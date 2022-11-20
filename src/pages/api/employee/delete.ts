@@ -23,13 +23,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
       })
       if (profile && profile.role !== Role.USER) {
-        console.log(req.query?.employeeId)
         const removedEmployee = await prisma.employee.delete({
           where: {
             id: req.query?.employeeId as string,
           },
         })
-        console.log('removedEmployee', removedEmployee)
         res.status(200).send(removedEmployee)
       } else
         res.status(403).send({ message: ErrorMessage.NOT_ENOUGH_PERMISSIONS })
