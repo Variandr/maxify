@@ -95,6 +95,7 @@ const Analytics = ({ incomes, orders }: Props) => {
   }
 
   const analyticsYear = 2022
+
   return (
     <div className="flex flex-row gap-5 flex-wrap">
       <div className="flex flex-col gap-5">
