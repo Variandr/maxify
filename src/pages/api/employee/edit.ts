@@ -44,8 +44,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               ...(isValid?.position && { position: isValid.position }),
             },
           })
-          console.log('updatedEmployee', updatedEmployee)
-          res.status(400).send(updatedEmployee)
+          res.status(200).send(updatedEmployee)
         } else {
           res
             .status(400)
@@ -53,8 +52,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
       } else
         res.status(403).send({ message: ErrorMessage.NOT_ENOUGH_PERMISSIONS })
-    }
-    res.status(401).send({ message: ErrorMessage.UNAUTHORIZED })
+    } else res.status(401).send({ message: ErrorMessage.UNAUTHORIZED })
   } catch (err) {
     if (err instanceof Error) ErrorService.handle(err)
   }

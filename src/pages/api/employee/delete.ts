@@ -28,11 +28,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             id: req.query?.employeeId as string,
           },
         })
+        await prisma.profile.delete({
+          where: {
+            id: removedEmployee.profileId,
+          },
+        })
         res.status(200).send(removedEmployee)
-      } else
+      } else {
         res.status(403).send({ message: ErrorMessage.NOT_ENOUGH_PERMISSIONS })
-    }
-    res.status(401).send({ message: ErrorMessage.UNAUTHORIZED })
+      }
+    } else res.status(401).send({ message: ErrorMessage.UNAUTHORIZED })
   } catch (err) {
     if (err instanceof Error) ErrorService.handle(err)
   }
