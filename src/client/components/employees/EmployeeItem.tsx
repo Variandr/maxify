@@ -13,6 +13,7 @@ interface Props {
   role?: Role
   setEmployees: (employee: Employee[]) => void
   employees?: Employee[]
+  setEditingEmployee: (employee: Employee) => void
 }
 
 const EmployeeItem = ({
@@ -21,6 +22,7 @@ const EmployeeItem = ({
   role,
   setEmployees,
   employees,
+  setEditingEmployee,
 }: Props) => {
   const { profile } = employee
   const [isVisible, setVisible] = useState(false)
@@ -66,6 +68,7 @@ const EmployeeItem = ({
         {Role.USER !== role && isVisible && (
           <div className="flex gap-5">
             <Image
+              onClick={() => setEditingEmployee(employee)}
               src={EditIcon}
               width={28}
               height={28}

@@ -5,6 +5,7 @@ import AddUserIcon from '@assets/add-user.svg'
 import { useEffect, useState } from 'react'
 import AddEmployee from '@components/employees/AddEmployee'
 import getEmployeesByOrganization from '@lib/get-employees-by-organization'
+import EditEmployee from '@components/employees/EditEmployee'
 
 interface Props {
   role?: Role
@@ -12,8 +13,9 @@ interface Props {
 }
 
 const Employees = ({ role, organizationId }: Props) => {
-  const [isVisible, showModal] = useState(false)
+  const [modal, showModal] = useState(false)
   const [employees, setEmployees] = useState<Employee[]>()
+  const [editEmployee, setEditingEmployee] = useState<Employee>()
 
   const getEmployees = async () => {
     const employeesData = await getEmployeesByOrganization(organizationId)
@@ -35,13 +37,14 @@ const Employees = ({ role, organizationId }: Props) => {
             role={role}
             employees={employees}
             setEmployees={setEmployees}
+            setEditingEmployee={setEditingEmployee}
           />
         ))}
       </div>
       {Role.USER !== role && (
         <div className="absolute bottom-2">
           <Image
-            onClick={() => showModal(!isVisible)}
+            onClick={() => showModal(true)}
             src={AddUserIcon}
             width={80}
             height={80}
@@ -51,12 +54,21 @@ const Employees = ({ role, organizationId }: Props) => {
         </div>
       )}
 
-      {isVisible && (
+      {modal && (
         <AddEmployee
           closeModal={() => showModal(false)}
           organizationId={organizationId}
           employees={employees}
           setEmployees={setEmployees}
+        />
+      )}
+
+      {editEmployee && (
+        <EditEmployee
+          closeModal={() => setEditingEmployee(undefined)}
+          employees={employees}
+          setEmployees={setEmployees}
+          employee={editEmployee}
         />
       )}
     </>

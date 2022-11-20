@@ -85,8 +85,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
       } else
         res.status(403).send({ message: ErrorMessage.NOT_ENOUGH_PERMISSIONS })
-    }
-    res.status(401).send({ message: ErrorMessage.UNAUTHORIZED })
+    } else res.status(401).send({ message: ErrorMessage.UNAUTHORIZED })
   } catch (err) {
     if (err instanceof Error) ErrorService.handle(err)
   }
