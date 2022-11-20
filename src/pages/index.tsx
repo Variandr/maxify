@@ -96,7 +96,7 @@ const Home = ({ products, orders, incomes, organization }: Props) => {
                 <Products products={products} />
               )}
               {activeModal === Modal.PROFILE && (
-                <Profile email={profile.email} />
+                <Profile email={profile.email} setModal={setModal} />
               )}
               {activeModal === Modal.EDIT_PROFILE && (
                 <EditProfile setModal={setModal} />
