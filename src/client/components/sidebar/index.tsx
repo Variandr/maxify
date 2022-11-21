@@ -2,13 +2,16 @@ import React from 'react'
 import Image from 'next/image'
 import Logo from '@assets/logo.svg'
 import ThemeSwitcher from '@components/ui/ThemeSwitcher'
-import { Modal, modals } from '@lib/types/modals'
+import { adminModals, Modal, modals as userModals } from '@lib/types/modals'
 
 interface Props {
   setModal: (modal: Modal) => void
+  isOwner?: boolean
 }
 
-const Sidebar = ({ setModal }: Props) => {
+const Sidebar = ({ setModal, isOwner }: Props) => {
+  const modals = isOwner ? adminModals : userModals
+
   return (
     <aside className="w-[4rem] min-h-full bg-[#343a40] flex flex-col pt-2 items-center dark:bg-black/90">
       <Image src={Logo} alt="user account" />
