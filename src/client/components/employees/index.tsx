@@ -4,7 +4,7 @@ import Image from 'next/image'
 import AddUserIcon from '@assets/add-user.svg'
 import { useEffect, useState } from 'react'
 import AddEmployee from '@components/employees/AddEmployee'
-import getEmployeesByOrganization from '@lib/get-employees-by-organization'
+import { getEmployeesByOrganization } from '@lib/employee'
 import EditEmployee from '@components/employees/EditEmployee'
 
 interface Props {

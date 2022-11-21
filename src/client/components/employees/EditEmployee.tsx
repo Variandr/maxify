@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import Image from 'next/image'
 import ArrowLeft from '@assets/arrow-left.svg'
 import { Employee } from '@lib/types'
-import editEmployee from '@lib/edit-employee'
+import { editEmployee } from '@lib/employee'
 
 interface Props {
   closeModal: () => void

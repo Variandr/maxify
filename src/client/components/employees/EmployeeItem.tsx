@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import EditIcon from '@assets/edit.svg'
 import DeleteIcon from '@assets/delete.svg'
 import { useState } from 'react'
-import deleteEmployee from '@lib/delete-employee'
+import { deleteEmployee } from '@lib/employee'
 
 interface Props {
   employee: Employee
