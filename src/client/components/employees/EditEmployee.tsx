@@ -6,6 +6,7 @@ import Image from 'next/image'
 import ArrowLeft from '@assets/arrow-left.svg'
 import { Employee } from '@lib/types'
 import { editEmployee } from '@lib/employee'
+import getFullName from '@lib/getFullName'
 
 interface Props {
   closeModal: () => void
@@ -46,7 +47,7 @@ const EditEmployee = ({
   })
 
   const { profile } = employee
-  const fullName = profile?.name + ' ' + (profile?.surname ?? '')
+  const fullName = getFullName(profile?.name, profile?.surname)
 
   const onSubmit = async (formData: EditEmployeeForm) => {
     const editedEmployee = await editEmployee({

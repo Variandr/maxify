@@ -8,7 +8,7 @@ import { Role } from '@lib/types'
 const JWT_SECRET_TOKEN = process.env.JWT_TOKEN
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method != 'GET') {
+  if (req.method != 'PATCH') {
     return
   }
 
@@ -24,20 +24,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       })
 
       if (profile && profile.role === Role.OWNER) {
-        const users = await prisma.profile.findMany({
-          include: {
-            employee: {
-              include: {
-                organization: {
-                  select: {
-                    name: true,
-                  },
-                },
-              },
-            },
+        const addedAdmin = await prisma.profile.update({
+          where: {
+            id: req.query.profileId as string,
+          },
+          data: {
+            role: Role.ADMIN,
           },
         })
-        res.status(200).send(users)
+        res.status(200).send(addedAdmin)
       } else
         res.status(403).send({ message: ErrorMessage.NOT_ENOUGH_PERMISSIONS })
     } else res.status(401).send({ message: ErrorMessage.UNAUTHORIZED })

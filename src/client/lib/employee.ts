@@ -1,11 +1,12 @@
 import { $authHost } from '@lib/interceptors'
 import { Employee } from '@lib/types'
 
-interface EmployeeData {
+export interface EmployeeData {
   position: string
   salary: number
   email: string
   name: string
+  surname?: string
   password: string
   organizationId: string
 }

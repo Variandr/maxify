@@ -1,16 +1,18 @@
-import { Admin } from '@lib/types'
+import { User } from '@lib/types'
 import classnames from 'classnames'
 import Image from 'next/image'
 import Avatar from '@assets/employee-no-avatar.svg'
 import DeleteIcon from '@assets/delete.svg'
+import getFullName from '@lib/getFullName'
 
 interface Props {
-  admin: Admin
+  admin: User
   idx: number
+  deleteAdmin: (id: string) => void
 }
 
-const AdminItem = ({ admin, idx }: Props) => {
-  const fullName = admin?.name + ' ' + (admin?.surname ?? '')
+const AdminItem = ({ admin, idx, deleteAdmin }: Props) => {
+  const fullName = getFullName(admin.name, admin?.surname)
   const employee = admin.employee[0]
   return (
     <div
@@ -36,7 +38,7 @@ const AdminItem = ({ admin, idx }: Props) => {
       <div className="w-2/12">{employee?.position ?? ''}</div>
       <div className="w-1/12 mt-2">
         <Image
-          // onClick={removeEmployee}
+          onClick={() => deleteAdmin(admin.id as string)}
           src={DeleteIcon}
           width={28}
           height={28}

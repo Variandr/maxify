@@ -24,20 +24,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       })
 
       if (profile && profile.role === Role.OWNER) {
-        const users = await prisma.profile.findMany({
-          include: {
-            employee: {
-              include: {
-                organization: {
-                  select: {
-                    name: true,
-                  },
-                },
-              },
-            },
-          },
-        })
-        res.status(200).send(users)
+        const organizations = prisma.organization.findMany()
+        res.status(200).send(organizations)
       } else
         res.status(403).send({ message: ErrorMessage.NOT_ENOUGH_PERMISSIONS })
     } else res.status(401).send({ message: ErrorMessage.UNAUTHORIZED })
