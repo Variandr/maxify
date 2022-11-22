@@ -46,9 +46,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           },
         })
 
-        const employeesMap = employees?.map((it) =>
-          omit(it, ['organizationId', 'profileId'])
-        )
+        const employeesMap = employees?.map((it) => {
+          const protectedProfile = omit(it.profile, ['password'])
+          return omit({ ...it, profile: protectedProfile }, [
+            'organizationId',
+            'profileId',
+          ])
+        })
         res.status(200).send(employeesMap)
       } else res.status(404).send({ message: ErrorMessage.UNAUTHORIZED })
     } else res.status(401).send({ message: ErrorMessage.UNAUTHORIZED })

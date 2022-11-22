@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
-import { addAdmin, getUsers, removeAdmin } from '@lib/admin'
+import { addAdmin, createAdmin, getUsers, removeAdmin } from '@lib/admin'
 import { Role, User } from '@lib/types'
 import AdminItem from '@components/admins/AdminItem'
-import CreateAdminModal from '@components/admins/CreateAdminModal'
+import AdminCreation from '@components/admins/AdminCreation'
 import AdminsToAdd from '@components/admins/AdminsToAdd'
+import { EmployeeData } from '@lib/employee'
 
 enum Modal {
   EXISTING = 'Existing',
@@ -45,6 +46,13 @@ const Admins = () => {
         return it
       })
       setProfiles(updatedUsers)
+    }
+  }
+
+  const addNewAdmin = async (admin: EmployeeData) => {
+    const newAdmin = await createAdmin(admin)
+    if (newAdmin) {
+      await getAdminUsers()
     }
   }
 
@@ -112,7 +120,12 @@ const Admins = () => {
           closeModal={() => setModal(undefined)}
         />
       )}
-      {modal === Modal.NEW && <CreateAdminModal />}
+      {modal === Modal.NEW && (
+        <AdminCreation
+          addNewAdmin={addNewAdmin}
+          closeModal={() => setModal(undefined)}
+        />
+      )}
     </div>
   )
 }

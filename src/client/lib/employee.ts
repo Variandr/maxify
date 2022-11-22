@@ -1,13 +1,8 @@
 import { $authHost } from '@lib/interceptors'
 import { Employee } from '@lib/types'
+import { AddEmployeeForm } from '@components/employees/AddEmployee'
 
-export interface EmployeeData {
-  position: string
-  salary: number
-  email: string
-  name: string
-  surname?: string
-  password: string
+export interface EmployeeData extends AddEmployeeForm {
   organizationId: string
 }
 
