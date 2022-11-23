@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import { addAdmin, createAdmin, getUsers, removeAdmin } from '@lib/admin'
 import { Role, User } from '@lib/types'
-import AdminItem from '@components/admins/AdminItem'
-import AdminCreation from '@components/admins/AdminCreation'
-import AdminsToAdd from '@components/admins/AdminsToAdd'
+import AdminItem from './AdminItem'
+import AdminCreation from './AdminCreation'
+import AdminsToAdd from './AdminsToAdd'
 import { EmployeeData } from '@lib/employee'
 
 enum Modal {

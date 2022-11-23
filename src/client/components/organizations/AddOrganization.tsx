@@ -1,4 +1,3 @@
-import { Organization } from '@lib/types'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import OrganizationForm, {
@@ -9,28 +8,18 @@ import Image from 'next/image'
 import ArrowLeft from '@assets/arrow-left.svg'
 
 interface Props {
-  organization: Organization
-  editOrganization: (organization: OrganizationFormI, id: string) => void
+  addOrganization: (organization: OrganizationFormI) => void
   closeModal: () => void
 }
 
-const EditOrganization = ({
-  organization,
-  editOrganization,
-  closeModal,
-}: Props) => {
+const AddOrganization = ({ addOrganization, closeModal }: Props) => {
   const formData = useForm<OrganizationFormI>({
     resolver: yupResolver(schema),
     mode: 'all',
-    defaultValues: {
-      name: organization.name,
-      description: organization.description,
-      totalIncome: organization.totalIncome,
-    },
   })
 
   const onSubmit = async (formData: OrganizationFormI) => {
-    await editOrganization(formData, organization.id)
+    await addOrganization(formData)
     closeModal()
   }
 
@@ -52,13 +41,9 @@ const EditOrganization = ({
           />
         </button>
 
-        <OrganizationForm
-          onSubmit={onSubmit}
-          organization={organization}
-          formData={formData}
-        />
+        <OrganizationForm onSubmit={onSubmit} formData={formData} />
       </div>
     </div>
   )
 }
-export default EditOrganization
+export default AddOrganization

@@ -9,7 +9,7 @@ import { schema } from '@components/organizations/OrganizationForm'
 const JWT_SECRET_TOKEN = process.env.JWT_TOKEN
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method != 'PATCH') {
+  if (req.method != 'POST') {
     return
   }
 
@@ -27,13 +27,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       if (profile && profile.role === Role.OWNER) {
         const isValid = await schema.validate(req.body)
         if (isValid) {
-          const updatedOrganization = await prisma.organization.update({
-            where: {
-              id: req.query.organizationId as string,
-            },
+          const createdOrganization = await prisma.organization.create({
             data: isValid,
           })
-          res.status(200).send(updatedOrganization)
+          res.status(200).send(createdOrganization)
         } else
           res
             .status(400)

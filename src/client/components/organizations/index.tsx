@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react'
 import { Organization } from '@lib/types'
 import {
+  createOrganization,
   getOrganizations,
   removeOrganization,
   updateOrganization,
 } from '@lib/organization'
-import OrganizationItem from '@components/organizations/OrganizationItem'
-import EditOrganization, {
-  OrganizationForm,
-} from '@components/organizations/EditOrganization'
+import OrganizationItem from './OrganizationItem'
+import EditOrganization from './EditOrganization'
+import AddOrganization from './AddOrganization'
+import { OrganizationFormI } from './OrganizationForm'
 
 const Organizations = () => {
   const [organizations, setOrganizations] = useState<Organization[]>([])
   const [currentOrganization, setOrganization] = useState<Organization>()
+  const [modal, setModal] = useState(false)
 
   const setupOrganizations = async () => {
     const organizationsData = await getOrganizations()
@@ -20,7 +22,7 @@ const Organizations = () => {
   }
 
   const editOrganization = async (
-    organization: OrganizationForm,
+    organization: OrganizationFormI,
     id: string
   ) => {
     const updatedOrganization = await updateOrganization(organization, id)
@@ -46,6 +48,11 @@ const Organizations = () => {
     }
   }
 
+  const addOrganization = async (organization: OrganizationFormI) => {
+    const newOrganization = await createOrganization(organization)
+    if (newOrganization) setOrganizations([...organizations, newOrganization])
+  }
+
   useEffect(() => {
     void setupOrganizations()
   }, [])
@@ -65,7 +72,10 @@ const Organizations = () => {
             />
           ))}
       </div>
-      <div className="mt-8 cursor-pointer mx-auto text-center w-48 ease-in duration-200 text-white py-3 px-6 font-bold text-md rounded-xl bg-green-500 hover:bg-green-600 dark:bg-green-700 dark:hover:bg-green-600">
+      <div
+        onClick={() => setModal(true)}
+        className="mt-8 cursor-pointer mx-auto text-center w-48 ease-in duration-200 text-white py-3 px-6 font-bold text-md rounded-xl bg-green-500 hover:bg-green-600 dark:bg-green-700 dark:hover:bg-green-600"
+      >
         Add organization
       </div>
       {currentOrganization && (
@@ -73,6 +83,13 @@ const Organizations = () => {
           organization={currentOrganization}
           editOrganization={editOrganization}
           closeModal={() => setOrganization(undefined)}
+        />
+      )}
+
+      {modal && (
+        <AddOrganization
+          addOrganization={addOrganization}
+          closeModal={() => setModal(false)}
         />
       )}
     </div>
