@@ -4,8 +4,7 @@ import Orders from '@assets/orders.svg'
 import Products from '@assets/products.svg'
 import Organizations from '@assets/organizations.svg'
 
-/*import Calculator from '@assets/calculator.svg'
-import Report from '@assets/report.svg'*/
+//import Report from '@assets/report.svg'
 
 export enum Modal {
   ANALYTICS = 'Analytics',
