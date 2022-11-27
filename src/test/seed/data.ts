@@ -9,7 +9,7 @@ import {
   Product,
   Profile,
   Role,
-} from '@lib/types'
+} from '../../client/lib/types'
 
 export interface Category {
   name: string
