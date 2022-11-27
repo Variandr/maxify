@@ -48,7 +48,7 @@ const OrganizationForm = ({ organization, formData, onSubmit }: Props) => {
           {...register('name')}
         />
         {errors.name && (
-          <p className={'text-red-600 text-sm'}>{errors.name?.message}</p>
+          <p className="text-red-600 text-sm">{errors.name?.message}</p>
         )}
       </div>
 
@@ -60,9 +60,7 @@ const OrganizationForm = ({ organization, formData, onSubmit }: Props) => {
           {...register('description')}
         />
         {errors.description && (
-          <p className={'text-red-600 text-sm'}>
-            {errors.description?.message}
-          </p>
+          <p className="text-red-600 text-sm">{errors.description?.message}</p>
         )}
       </div>
 
@@ -75,9 +73,7 @@ const OrganizationForm = ({ organization, formData, onSubmit }: Props) => {
           {...register('totalIncome')}
         />
         {errors.totalIncome && (
-          <p className={'text-red-600 text-sm'}>
-            {errors.totalIncome?.message}
-          </p>
+          <p className="text-red-600 text-sm">{errors.totalIncome?.message}</p>
         )}
       </div>
 

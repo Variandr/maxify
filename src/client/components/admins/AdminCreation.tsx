@@ -92,7 +92,7 @@ const AdminCreation = ({ closeModal, addNewAdmin }: Props) => {
               {...register('email')}
             />
             {errors.email && (
-              <p className={'text-red-600 text-sm'}>{errors.email?.message}</p>
+              <p className="text-red-600 text-sm">{errors.email?.message}</p>
             )}
           </div>
 
@@ -104,9 +104,7 @@ const AdminCreation = ({ closeModal, addNewAdmin }: Props) => {
               {...register('password')}
             />
             {errors.password && (
-              <p className={'text-red-600 text-sm'}>
-                {errors.password?.message}
-              </p>
+              <p className="text-red-600 text-sm">{errors.password?.message}</p>
             )}
           </div>
 
@@ -118,7 +116,7 @@ const AdminCreation = ({ closeModal, addNewAdmin }: Props) => {
               {...register('name')}
             />
             {errors.name && (
-              <p className={'text-red-600 text-sm'}>{errors.name?.message}</p>
+              <p className="text-red-600 text-sm">{errors.name?.message}</p>
             )}
           </div>
 
@@ -130,9 +128,7 @@ const AdminCreation = ({ closeModal, addNewAdmin }: Props) => {
               {...register('surname')}
             />
             {errors.surname && (
-              <p className={'text-red-600 text-sm'}>
-                {errors.surname?.message}
-              </p>
+              <p className="text-red-600 text-sm">{errors.surname?.message}</p>
             )}
           </div>
 
@@ -144,9 +140,7 @@ const AdminCreation = ({ closeModal, addNewAdmin }: Props) => {
               {...register('position')}
             />
             {errors.position && (
-              <p className={'text-red-600 text-sm'}>
-                {errors.position?.message}
-              </p>
+              <p className="text-red-600 text-sm">{errors.position?.message}</p>
             )}
           </div>
 
@@ -158,7 +152,7 @@ const AdminCreation = ({ closeModal, addNewAdmin }: Props) => {
               {...register('salary')}
             />
             {errors.salary && (
-              <p className={'text-red-600 text-sm'}>{errors.salary?.message}</p>
+              <p className="text-red-600 text-sm">{errors.salary?.message}</p>
             )}
           </div>
 
@@ -179,7 +173,7 @@ const AdminCreation = ({ closeModal, addNewAdmin }: Props) => {
           )}
 
           {emailAlreadyExists && (
-            <p className={'text-red-600 text-sm'}>{emailAlreadyExists}</p>
+            <p className="text-red-600 text-sm">{emailAlreadyExists}</p>
           )}
 
           <button

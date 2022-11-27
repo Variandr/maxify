@@ -6,6 +6,7 @@ import Burger from '@assets/burger.svg'
 import Success from '@assets/success.svg'
 import Image from 'next/image'
 import ArrowLeft from '@assets/arrow-left.svg'
+import classnames from 'classnames'
 
 interface Props {
   users: User[]
@@ -91,26 +92,35 @@ const AdminsToAdd = ({ users, setAdmin, closeModal }: Props) => {
                       <Combobox.Option
                         key={person.id}
                         className={({ active }) =>
-                          `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                            active ? 'bg-green-500 text-white' : 'text-gray-900'
-                          }`
+                          classnames(
+                            'relative cursor-default select-none py-2 pl-10 pr-4',
+                            {
+                              'bg-green-500 text-white': active,
+                              'text-gray-900': !active,
+                            }
+                          )
                         }
                         value={person}
                       >
                         {({ selected, active }) => (
                           <>
                             <span
-                              className={`block truncate ${
-                                selected ? 'font-medium' : 'font-normal'
-                              }`}
+                              className={classnames('block truncate', {
+                                'font-medium': selected,
+                                'font-normal': !selected,
+                              })}
                             >
                               {person.fullName}
                             </span>
                             {selected ? (
                               <span
-                                className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                  active ? 'text-white' : 'text-teal-600'
-                                }`}
+                                className={classnames(
+                                  'absolute inset-y-0 left-0 flex items-center pl-3',
+                                  {
+                                    'text-white': active,
+                                    'text-teal-600': !active,
+                                  }
+                                )}
                               >
                                 <Image
                                   src={Success}
