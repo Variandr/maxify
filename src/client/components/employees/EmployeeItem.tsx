@@ -5,7 +5,8 @@ import classnames from 'classnames'
 import EditIcon from '@assets/edit.svg'
 import DeleteIcon from '@assets/delete.svg'
 import { useState } from 'react'
-import deleteEmployee from '@lib/delete-employee'
+import { deleteEmployee } from '@lib/employee'
+import getFullName from '@lib/getFullName'
 
 interface Props {
   employee: Employee
@@ -26,7 +27,7 @@ const EmployeeItem = ({
 }: Props) => {
   const { profile } = employee
   const [isVisible, setVisible] = useState(false)
-  const fullName = profile?.name + ' ' + (profile?.surname ?? '')
+  const fullName = getFullName(profile?.name, profile?.surname)
 
   const removeEmployee = async () => {
     const removedEmployee = await deleteEmployee(employee.id)

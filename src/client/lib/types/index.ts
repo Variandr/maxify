@@ -45,6 +45,10 @@ export interface ProfileType extends Partial<profile> {
   employee: Partial<Employee[]>
 }
 
+export interface User extends Profile {
+  employee: Array<Employee & { organization: { name: string } }>
+}
+
 export enum Role {
   USER = 'USER',
   ADMIN = 'ADMIN',

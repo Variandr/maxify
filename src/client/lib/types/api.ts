@@ -5,6 +5,7 @@ export enum ErrorMessage {
   INCORRECT_PASSWORD = 'You`ve got incorrect password',
   UNAUTHORIZED = 'You need to be authorized!',
   NOT_ENOUGH_PERMISSIONS = 'You don`t have permission for this operation',
+  ALREADY_EXISTS = 'Account with this email already exists. Try another one',
 }
 
 export enum InfoMessage {

@@ -18,6 +18,8 @@ import Profile from '@components/profile'
 import Settings from '@components/settings'
 import { $authHost } from '@lib/interceptors'
 import EditProfile from '@components/profile/EditProfile/EditProfile'
+import Organizations from '@components/organizations'
+import Admins from '@components/admins'
 
 interface Props {
   organization: Organization
@@ -35,7 +37,7 @@ const Home = ({ products, orders, incomes, organization }: Props) => {
   const isUserAuthorized = useSelector(
     (state: RootState) => state.profile.isAuth
   )
-  const [activeModal, setModal] = useState<Modal | undefined>(Modal.ANALYTICS)
+  const [activeModal, setModal] = useState<Modal>()
   const router = useRouter()
   const dispatch = useDispatch()
   const profile = useSelector(getProfile)
@@ -48,6 +50,9 @@ const Home = ({ products, orders, incomes, organization }: Props) => {
       if (profile) {
         dispatch(setProfile(profile))
         dispatch(setAuthStatus(true))
+        setModal(
+          profile?.role === Role.OWNER ? Modal.ORGANIZATIONS : Modal.ANALYTICS
+        )
       }
     } catch {
       await router.push('/auth')
@@ -68,11 +73,12 @@ const Home = ({ products, orders, incomes, organization }: Props) => {
     <div className="flex h-screen font-basic bg-white dark:text-neutral-100">
       {profile.role === Role.OWNER ? (
         <>
-          <Sidebar setModal={setModal} />
+          <Sidebar setModal={setModal} isOwner />
           <div className="flex flex-col w-full">
             <Header activeModal={activeModal} setModal={setModal} />
             <div className="h-full dark:bg-black/95 p-5">
-              <div>Owner admin panel :)</div>
+              {activeModal === Modal.ORGANIZATIONS && <Organizations />}
+              {activeModal === Modal.ADMINS && <Admins />}
             </div>
           </div>
         </>

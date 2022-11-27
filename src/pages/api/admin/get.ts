@@ -3,6 +3,7 @@ import ErrorService from '@lib/error-service'
 import { ErrorMessage } from '@lib/types/api'
 import jwt from 'jsonwebtoken'
 import prisma from '@server/db/prisma'
+import { Role } from '@lib/types'
 import { omit } from 'lodash'
 
 const JWT_SECRET_TOKEN = process.env.JWT_TOKEN
@@ -23,38 +24,24 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
       })
 
-      if (profile) {
-        const employees = await prisma.employee.findMany({
-          where: {
-            organizationId: req.query.organizationId as string,
-          },
+      if (profile && profile.role === Role.OWNER) {
+        const users = await prisma.profile.findMany({
           include: {
-            profile: {
-              select: {
-                name: true,
-                surname: true,
-                age: true,
-                avatarUrl: true,
-                email: true,
-                phoneNumber: true,
-                city: true,
-                gender: true,
-                birthday: true,
-                address: true,
+            employee: {
+              include: {
+                organization: {
+                  select: {
+                    name: true,
+                  },
+                },
               },
             },
           },
         })
-
-        const employeesMap = employees?.map((it) => {
-          const protectedProfile = omit(it.profile, ['password'])
-          return omit({ ...it, profile: protectedProfile }, [
-            'organizationId',
-            'profileId',
-          ])
-        })
-        res.status(200).send(employeesMap)
-      } else res.status(404).send({ message: ErrorMessage.UNAUTHORIZED })
+        const usersMap = users.map((it) => omit(it, ['password']))
+        res.status(200).send(usersMap)
+      } else
+        res.status(403).send({ message: ErrorMessage.NOT_ENOUGH_PERMISSIONS })
     } else res.status(401).send({ message: ErrorMessage.UNAUTHORIZED })
   } catch (err) {
     if (err instanceof Error) ErrorService.handle(err)

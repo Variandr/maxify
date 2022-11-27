@@ -2,6 +2,8 @@ import Analytics from '@assets/analytics.svg'
 import Employees from '@assets/employees.svg'
 import Orders from '@assets/orders.svg'
 import Products from '@assets/products.svg'
+import Organizations from '@assets/organizations.svg'
+
 /*import Calculator from '@assets/calculator.svg'
 import Report from '@assets/report.svg'*/
 
@@ -15,6 +17,8 @@ export enum Modal {
   PROFILE = 'Profile',
   EDIT_PROFILE = 'Edit Profile',
   SETTINGS = 'Settings',
+  ORGANIZATIONS = 'Organizations',
+  ADMINS = 'Admins',
 }
 
 export const modals = [
@@ -34,7 +38,8 @@ export const modals = [
     name: Modal.PRODUCTS,
     url: Products,
   },
-  /*  {
+  /* TODO: maybe we will do it in feature
+  {
     name: Modal.CALCULATOR,
     url: Calculator,
   },
@@ -42,6 +47,22 @@ export const modals = [
     name: Modal.REPORT,
     url: Report,
   },*/
+]
+
+export const adminModals = [
+  /* TODO: maybe we will do it in feature
+  {
+    name: Modal.ANALYTICS,
+    url: Analytics,
+  },*/
+  {
+    name: Modal.ORGANIZATIONS,
+    url: Organizations,
+  },
+  {
+    name: Modal.ADMINS,
+    url: Employees,
+  },
 ]
 
 export const userModals = [{ name: Modal.PROFILE }, { name: Modal.SETTINGS }]

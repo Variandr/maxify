@@ -3,9 +3,9 @@ import EmployeeItem from './EmployeeItem'
 import Image from 'next/image'
 import AddUserIcon from '@assets/add-user.svg'
 import { useEffect, useState } from 'react'
-import AddEmployee from '@components/employees/AddEmployee'
-import getEmployeesByOrganization from '@lib/get-employees-by-organization'
-import EditEmployee from '@components/employees/EditEmployee'
+import AddEmployee from './AddEmployee'
+import { getEmployeesByOrganization } from '@lib/employee'
+import EditEmployee from './EditEmployee'
 
 interface Props {
   role?: Role

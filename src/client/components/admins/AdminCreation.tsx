@@ -1,73 +1,66 @@
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
-import classnames from 'classnames'
 import Image from 'next/image'
 import ArrowLeft from '@assets/arrow-left.svg'
+import * as yup from 'yup'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 import getProfile from '@lib/get-profile'
-import { addEmployee } from '@lib/employee'
-import { useState } from 'react'
-import { Employee } from '@lib/types'
+import classnames from 'classnames'
+import { AddEmployeeForm, schema } from '@components/employees/AddEmployee'
+import { EmployeeData } from '@lib/employee'
 import { ErrorMessage } from '@lib/types/api'
+import { Organization } from '@lib/types'
+import { getOrganizations } from '@lib/organization'
 
 interface Props {
   closeModal: () => void
-  organizationId: string
-  setEmployees: (employee: Employee[]) => void
-  employees?: Employee[]
+  addNewAdmin: (admin: EmployeeData) => void
 }
 
-export interface AddEmployeeForm {
-  position: string
-  salary: number
-  email: string
-  name: string
-  password: string
-  surname?: string
-}
-
-export const schema = yup
-  .object({
-    position: yup.string().required(),
-    salary: yup.number().required(),
-    email: yup.string().email().required(),
-    name: yup.string().required(),
-    password: yup.string().required(),
-    surname: yup.string(),
-  })
+const adminSchema = schema
+  .concat(
+    yup.object().shape({
+      organizationId: yup.string().required(),
+    })
+  )
   .required()
 
-const AddEmployee = ({
-  closeModal,
-  organizationId,
-  setEmployees,
-  employees,
-}: Props) => {
+interface AdminForm extends AddEmployeeForm {
+  organizationId: string
+}
+
+const AdminCreation = ({ closeModal, addNewAdmin }: Props) => {
+  const [organizations, setOrganizations] = useState<Organization[]>([])
   const [emailAlreadyExists, setEmailAlreadyExists] = useState('')
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<AddEmployeeForm>({
-    resolver: yupResolver(schema),
+  } = useForm<AdminForm>({
+    resolver: yupResolver(adminSchema),
     mode: 'all',
   })
 
-  const onSubmit = async (formData: AddEmployeeForm) => {
+  const onSubmit = async (formData: AdminForm) => {
     setEmailAlreadyExists('')
     const profile = await getProfile(formData.email)
     if (profile) {
       setEmailAlreadyExists(ErrorMessage.ALREADY_EXISTS)
     } else {
-      const employee = await addEmployee({ ...formData, organizationId })
-
-      if (employee) {
-        setEmployees(employees ? [...employees, employee] : [employee])
-        closeModal()
-      }
+      await addNewAdmin(formData)
+      closeModal()
     }
   }
+
+  const getOrganizationsData = async () => {
+    const organizationsData = await getOrganizations()
+    if (organizationsData) setOrganizations(organizationsData)
+  }
+
+  useEffect(() => {
+    void getOrganizationsData()
+  }, [])
 
   return (
     <div
@@ -99,7 +92,7 @@ const AddEmployee = ({
               {...register('email')}
             />
             {errors.email && (
-              <p className={'text-red-600 text-sm'}>{errors.email?.message}</p>
+              <p className="text-red-600 text-sm">{errors.email?.message}</p>
             )}
           </div>
 
@@ -111,9 +104,7 @@ const AddEmployee = ({
               {...register('password')}
             />
             {errors.password && (
-              <p className={'text-red-600 text-sm'}>
-                {errors.password?.message}
-              </p>
+              <p className="text-red-600 text-sm">{errors.password?.message}</p>
             )}
           </div>
 
@@ -125,7 +116,7 @@ const AddEmployee = ({
               {...register('name')}
             />
             {errors.name && (
-              <p className={'text-red-600 text-sm'}>{errors.name?.message}</p>
+              <p className="text-red-600 text-sm">{errors.name?.message}</p>
             )}
           </div>
 
@@ -137,9 +128,7 @@ const AddEmployee = ({
               {...register('surname')}
             />
             {errors.surname && (
-              <p className={'text-red-600 text-sm'}>
-                {errors.surname?.message}
-              </p>
+              <p className="text-red-600 text-sm">{errors.surname?.message}</p>
             )}
           </div>
 
@@ -151,9 +140,7 @@ const AddEmployee = ({
               {...register('position')}
             />
             {errors.position && (
-              <p className={'text-red-600 text-sm'}>
-                {errors.position?.message}
-              </p>
+              <p className="text-red-600 text-sm">{errors.position?.message}</p>
             )}
           </div>
 
@@ -165,12 +152,28 @@ const AddEmployee = ({
               {...register('salary')}
             />
             {errors.salary && (
-              <p className={'text-red-600 text-sm'}>{errors.salary?.message}</p>
+              <p className="text-red-600 text-sm">{errors.salary?.message}</p>
             )}
           </div>
 
+          {organizations && organizations.length > 0 && (
+            <div className="flex flex-col">
+              <label className="text-gray-600 font-medium">Organization</label>
+              <select
+                className="border-solid bg-white border-b-2 outline-0 py-2 px-4 w-full text-gray-700"
+                {...register('organizationId')}
+              >
+                {organizations.map((it) => (
+                  <option key={it.id} value={it.id}>
+                    {it.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
           {emailAlreadyExists && (
-            <p className={'text-red-600 text-sm'}>{emailAlreadyExists}</p>
+            <p className="text-red-600 text-sm">{emailAlreadyExists}</p>
           )}
 
           <button
@@ -182,11 +185,11 @@ const AddEmployee = ({
             type="submit"
             disabled={!isValid}
           >
-            Add employee
+            Create Admin
           </button>
         </form>
       </div>
     </div>
   )
 }
-export default AddEmployee
+export default AdminCreation

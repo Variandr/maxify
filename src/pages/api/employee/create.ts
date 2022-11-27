@@ -17,6 +17,7 @@ const schema = yup
     email: yup.string().email().required(),
     name: yup.string().required(),
     surname: yup.string(),
+    role: yup.string(),
     password: yup.string().required(),
     organizationId: yup.string().required(),
   })
@@ -50,6 +51,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               email: isValid.email,
               name: isValid.name,
               ...(isValid?.surname && { surname: isValid.surname }),
+              ...(isValid?.role &&
+                profile.role === Role.OWNER && { role: isValid.role }),
               password,
             },
           })
