@@ -11,7 +11,7 @@ import Analytics from '@components/analytics'
 import Employees from '@components/employees'
 import Orders from '@components/orders'
 import Products from '@components/products'
-import { Income, Order, Organization, Product, Role } from '@lib/types'
+import { Income, Order, Organization, Role } from '@lib/types'
 import { setAuthStatus, setProfile } from '@store/actions/profile'
 import { getProfile } from '@store/selectors/profile'
 import Profile from '@components/profile'
@@ -25,7 +25,6 @@ interface Props {
   organization: Organization
   incomes: Income[] | null
   orders: Order[] | null
-  products: Product[] | null
 }
 
 export async function getStaticProps(context: GetStaticPropsContext<{}>) {
@@ -33,7 +32,7 @@ export async function getStaticProps(context: GetStaticPropsContext<{}>) {
   return staticProps ? JSON.parse(JSON.stringify(staticProps)) : null
 }
 
-const Home = ({ products, orders, incomes, organization }: Props) => {
+const Home = ({ orders, incomes, organization }: Props) => {
   const isUserAuthorized = useSelector(
     (state: RootState) => state.profile.isAuth
   )
@@ -99,7 +98,10 @@ const Home = ({ products, orders, incomes, organization }: Props) => {
               )}
               {activeModal === Modal.ORDERS && <Orders orders={orders} />}
               {activeModal === Modal.PRODUCTS && (
-                <Products products={products} />
+                <Products
+                  organizationId={organization.id}
+                  role={profile.role}
+                />
               )}
               {activeModal === Modal.PROFILE && (
                 <Profile email={profile.email} setModal={setModal} />

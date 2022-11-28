@@ -12,6 +12,7 @@ import {
 } from '../../client/lib/types'
 
 export interface Category {
+  id: string
   name: string
 }
 

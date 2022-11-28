@@ -19,6 +19,12 @@ export interface Income extends income {
 }
 
 export interface Product extends Partial<product> {
+  id: string
+  createdAt: Date
+  updatedAt: Date
+  organizationId: string
+  categoryId: string
+  description: string
   name: string
   price: number
 }

@@ -13,9 +13,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const accessToken = req.headers.authorization?.split(' ')[1]
     if (accessToken && JWT_SECRET_TOKEN) {
-      const categories = await prisma.category.findMany()
-
-      res.status(200).send(categories)
+      if (req.query) {
+        const orders = await prisma.order.findMany({
+          where: {
+            organizationId: req.query.organizationId as string,
+          },
+        })
+        res.status(200).send(orders)
+      } else
+        res.status(404).send({ message: ErrorMessage.YOU_HAVE_INCORRECT_DATA })
     } else res.status(401).send({ message: ErrorMessage.UNAUTHORIZED })
   } catch (err) {
     if (err instanceof Error) ErrorService.handle(err)

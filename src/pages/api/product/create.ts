@@ -9,7 +9,10 @@ const JWT_SECRET_TOKEN = process.env.JWT_TOKEN
 const schema = yup
   .object()
   .shape({
+    categoryId: yup.string().required(),
     name: yup.string().required(),
+    price: yup.number().required(),
+    description: yup.string(),
   })
   .required()
 
@@ -23,12 +26,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (accessToken && JWT_SECRET_TOKEN) {
       const isValid = await schema.validate(req.body)
       if (isValid && req.query) {
-        const newCategory = await prisma.category.create({
+        const newProduct = await prisma.product.create({
           data: {
+            //@ts-ignore
+            organizationId: req.query.organizationId as string,
+            categoryId: isValid.categoryId,
             name: isValid.name,
+            price: isValid.price,
+            description: isValid.description,
           },
         })
-        res.status(200).send(newCategory)
+        res.status(200).send(newProduct)
       } else {
         res.status(403).send({ message: ErrorMessage.YOU_HAVE_INCORRECT_DATA })
       }
