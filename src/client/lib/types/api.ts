@@ -10,4 +10,5 @@ export enum ErrorMessage {
 
 export enum InfoMessage {
   EMAIL_SENT = 'Follow the instructions which are sent on your email to reset your password',
+  SUCCESSFULLY_DELETED = 'Successfully deleted',
 }

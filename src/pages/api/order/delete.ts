@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import ErrorService from '@lib/error-service'
-import { ErrorMessage } from '@lib/types/api'
+import { ErrorMessage, InfoMessage } from '@lib/types/api'
 import prisma from '@server/db/prisma'
 
 const JWT_SECRET_TOKEN = process.env.JWT_TOKEN
@@ -25,7 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             id: req.query.orderId as string,
           },
         })
-        res.status(200).send({ message: 'Successfully deleted' })
+        res.status(200).send({ message: InfoMessage.SUCCESSFULLY_DELETED })
       } else {
         res.status(403).send({ message: ErrorMessage.YOU_HAVE_INCORRECT_DATA })
       }
