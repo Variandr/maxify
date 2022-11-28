@@ -3,7 +3,7 @@
 import { Prisma } from '@prisma/client'
 import prisma from '../../server/db/prisma'
 import { testData } from './data'
-import { Organization } from '@lib/types'
+import { Organization } from '../../client/lib/types'
 
 async function seedOrganization(org: Organization) {
   const categories = await Promise.all(
