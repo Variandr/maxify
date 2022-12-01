@@ -28,6 +28,7 @@ const schema = yup
     name: yup.string().required(),
     price: yup.number().required(),
     description: yup.string(),
+    discount: yup.number().min(0).max(100),
   })
   .required()
 
@@ -119,9 +120,6 @@ const AddProduct = ({
                 {...register('categoryId')}
                 className="block py-2 px-4 w-full text-sm text-gray-500 bg-transparent border-b-2 dark:border-white appearance-none focus:outline-none focus:ring-0 peer"
               >
-                <option selected disabled={true}>
-                  Choose a category
-                </option>
                 {categories?.map((it) => (
                   <option key={it.id} value={it.id}>
                     {it.name}

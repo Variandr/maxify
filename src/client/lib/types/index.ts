@@ -31,7 +31,7 @@ export interface Product extends Partial<product> {
 
 export interface Order extends order {
   product: {
-    quantity: string
+    quantity: number | string
     productId: string
   }[]
 }
@@ -77,4 +77,9 @@ export enum Gender {
   MALE = 'MALE',
   FEMALE = 'FEMALE',
   OTHER = 'OTHER',
+}
+
+export interface OrderProductsData {
+  productId: string
+  quantity: number
 }

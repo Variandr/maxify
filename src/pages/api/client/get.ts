@@ -6,29 +6,16 @@ import prisma from '@server/db/prisma'
 const JWT_SECRET_TOKEN = process.env.JWT_TOKEN
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method != 'DELETE') {
+  if (req.method != 'GET') {
     return
   }
 
   try {
     const accessToken = req.headers.authorization?.split(' ')[1]
     if (accessToken && JWT_SECRET_TOKEN) {
-      const order = await prisma.order.findUnique({
-        where: {
-          id: req.query.orderId as string,
-        },
-      })
+      const clients = await prisma.client.findMany()
 
-      if (order && req.query) {
-        await prisma.order.delete({
-          where: {
-            id: req.query.orderId as string,
-          },
-        })
-        res.status(200).send({ order })
-      } else {
-        res.status(403).send({ message: ErrorMessage.YOU_HAVE_INCORRECT_DATA })
-      }
+      res.status(200).send(clients)
     } else res.status(401).send({ message: ErrorMessage.UNAUTHORIZED })
   } catch (err) {
     if (err instanceof Error) ErrorService.handle(err)

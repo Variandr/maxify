@@ -17,6 +17,7 @@ export interface Category {
 }
 
 export interface Client {
+  id: string
   name: string
   address?: string | null
   location?: string | null

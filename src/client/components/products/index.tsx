@@ -48,7 +48,7 @@ const Products = ({ organizationId, role }: Props) => {
 
   return (
     <>
-      <div className="flex flex-col h-[75vh] overflow-y-hidden rounded">
+      <div className="flex flex-col h-[75vh] overflow-y-auto scrollbar-hide rounded">
         {products?.length && (
           <div className="flex px-5 py-3 gap-5 text-xl bg-zinc-200 dark:bg-zinc-900/50">
             <p className="w-3/12">Name</p>

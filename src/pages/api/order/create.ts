@@ -10,9 +10,9 @@ const JWT_SECRET_TOKEN = process.env.JWT_TOKEN
 const schema = yup
   .object()
   .shape({
-    organizationId: yup.string().required(),
     totalPrice: yup.number().required(),
-    discount: yup.number(),
+    clientId: yup.string().required(),
+    discount: yup.number().min(0).max(100),
     status: yup.string(),
     deliveryStatus: yup.string(),
     product: yup.array().required(),
@@ -33,19 +33,20 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           data: {
             organizationId: req.query.organizationId as string,
             totalPrice: isValid.totalPrice,
-            ...(isValid?.discount && { discount: isValid.discount }),
+            discount: isValid.discount,
             status: isValid.status,
             deliveryStatus: DeliveryStatus.NOT_DELIVERED,
-            clientId: req.query.clientId,
+            clientId: isValid.clientId,
             product: isValid.product,
           },
         })
-        res.status(400).send(newOrder)
+        res.status(200).send(newOrder)
       } else {
         res.status(403).send({ message: ErrorMessage.YOU_HAVE_INCORRECT_DATA })
       }
     } else res.status(401).send({ message: ErrorMessage.UNAUTHORIZED })
   } catch (err) {
+    console.log(err)
     if (err instanceof Error) ErrorService.handle(err)
   }
 }

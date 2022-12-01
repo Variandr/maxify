@@ -9,6 +9,7 @@ const JWT_SECRET_TOKEN = process.env.JWT_TOKEN
 const schema = yup
   .object()
   .shape({
+    clientId: yup.string(),
     totalPrice: yup.number(),
     discount: yup.number(),
     status: yup.string(),
@@ -25,7 +26,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const accessToken = req.headers.authorization?.split(' ')[1]
     if (accessToken && JWT_SECRET_TOKEN) {
-      const order = await prisma.product.findUnique({
+      const order = await prisma.order.findUnique({
         where: {
           id: req.query.orderId as string,
         },
@@ -46,6 +47,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               deliveryStatus: isValid.deliveryStatus,
             }),
             ...(isValid.product && { product: isValid.product }),
+            ...(isValid.clientId && { clientId: isValid.clientId }),
           },
         })
         res.status(200).send(updatedOrder)
