@@ -30,6 +30,15 @@ export interface Product extends Partial<product> {
 }
 
 export interface Order extends order {
+  id: string
+  createdAt: Date
+  updatedAt: Date
+  organizationId: string
+  totalPrice: number
+  discount: number | null
+  status: OrderStatus
+  deliveryStatus: DeliveryStatus
+  clientId: string
   product: {
     quantity: number | string
     productId: string
