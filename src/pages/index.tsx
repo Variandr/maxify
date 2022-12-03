@@ -96,7 +96,9 @@ const Home = ({ orders, incomes, organization }: Props) => {
                   organizationId={organization.id}
                 />
               )}
-              {activeModal === Modal.ORDERS && <Orders orders={orders} />}
+              {activeModal === Modal.ORDERS && (
+                <Orders organizationId={organization.id} role={profile.role} />
+              )}
               {activeModal === Modal.PRODUCTS && (
                 <Products
                   organizationId={organization.id}
