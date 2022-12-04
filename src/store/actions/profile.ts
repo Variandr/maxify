@@ -1,9 +1,10 @@
 import {
   SET_IS_AUTHORIZED,
+  SET_ORGANIZATION,
   SET_PROFILE,
   UPDATE_PROFILE,
 } from '../reducers/profile'
-import { Profile } from '@lib/types'
+import { Organization, Profile } from '@lib/types'
 
 export const setAuthStatus = (status: boolean) => ({
   type: SET_IS_AUTHORIZED,
@@ -18,4 +19,9 @@ export const setProfile = (profile: Profile | null) => ({
 export const updateProfile = (profile: Profile | null) => ({
   type: UPDATE_PROFILE,
   payload: profile,
+})
+
+export const setOrganization = (organization: Organization | null) => ({
+  type: SET_ORGANIZATION,
+  payload: organization,
 })
