@@ -72,13 +72,16 @@ const AddEmployee = ({
   return (
     <div
       onClick={closeModal}
-      className="absolute z-10 top-0 left-0 flex items-center justify-center w-screen h-screen bg-white/75 dark:bg-black/75"
+      className="absolute z-10 top-0 left-0 flex items-center justify-center w-screen h-screen bg-black/75 dark:bg-black/75"
     >
       <div
-        className="absolute shadow-xl bg-white dark:bg-black w-6/12 h-fit z-20 rounded-lg"
+        className="absolute shadow-xl bg-white dark:bg-black/75 dark:border-[1px] border-white w-[45%] h-fit z-20 rounded-lg px-5 py-8"
         onClick={(event) => event.stopPropagation()}
       >
-        <button className="absolute left-5 top-5" onClick={closeModal}>
+        <button
+          className="absolute left-5 top-5 dark:invert"
+          onClick={closeModal}
+        >
           <Image
             width={35}
             height={35}
@@ -92,9 +95,9 @@ const AddEmployee = ({
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="flex flex-col">
-            <label className="text-gray-600 font-medium">Email</label>
+            <label className="font-medium">Email</label>
             <input
-              className="border-solid border-b-2 outline-0 py-2 px-4 text-gray-700"
+              className="border-solid dark:bg-black border-b-2 outline-0 py-2 px-4"
               placeholder="Type new email"
               {...register('email')}
             />
@@ -104,9 +107,9 @@ const AddEmployee = ({
           </div>
 
           <div className="flex flex-col">
-            <label className="text-gray-600 font-medium">Password</label>
+            <label className="font-medium">Password</label>
             <input
-              className="border-solid border-b-2 outline-0 py-2 px-4 text-gray-700"
+              className="border-solid dark:bg-black border-b-2 outline-0 py-2 px-4"
               placeholder="Type password"
               {...register('password')}
             />
@@ -118,9 +121,9 @@ const AddEmployee = ({
           </div>
 
           <div className="flex flex-col">
-            <label className="text-gray-600 font-medium">Name</label>
+            <label className="font-medium">Name</label>
             <input
-              className="border-solid border-b-2 outline-0 py-2 px-4 w-full text-gray-700"
+              className="border-solid dark:bg-black border-b-2 outline-0 py-2 px-4"
               placeholder="Name"
               {...register('name')}
             />
@@ -130,9 +133,9 @@ const AddEmployee = ({
           </div>
 
           <div className="flex flex-col">
-            <label className="text-gray-600 font-medium">Surname</label>
+            <label className="font-medium">Surname</label>
             <input
-              className="border-solid border-b-2 outline-0 py-2 px-4 w-full text-gray-700"
+              className="border-solid dark:bg-black border-b-2 outline-0 py-2 px-4"
               placeholder="Surname"
               {...register('surname')}
             />
@@ -144,9 +147,9 @@ const AddEmployee = ({
           </div>
 
           <div className="flex flex-col">
-            <label className="text-gray-600 font-medium">Position</label>
+            <label className="font-medium">Position</label>
             <input
-              className="border-solid border-b-2 outline-0 py-2 px-4 w-full text-gray-700"
+              className="border-solid dark:bg-black border-b-2 outline-0 py-2 px-4"
               placeholder="Ex. CEO"
               {...register('position')}
             />
@@ -158,9 +161,9 @@ const AddEmployee = ({
           </div>
 
           <div className="flex flex-col">
-            <label className="text-gray-600 font-medium">Salary</label>
+            <label className="font-medium">Salary</label>
             <input
-              className="border-solid border-b-2 outline-0 py-2 px-4 w-full text-gray-700"
+              className="border-solid dark:bg-black border-b-2 outline-0 py-2 px-4"
               placeholder="Salary"
               {...register('salary')}
             />
@@ -175,9 +178,12 @@ const AddEmployee = ({
 
           <button
             className={classnames(
-              'mt-9 ease-in duration-200 text-white border py-3 px-6 font-bold mx-auto text-md rounded-xl',
-              { 'bg-green-500 hover:bg-green-600': isValid },
-              { 'bg-green-500/50': !isValid }
+              'mt-5 ease-in duration-200 text-white mx-auto py-3 px-6 font-bold text-md rounded-xl',
+              {
+                'bg-green-500 hover:bg-green-600 dark:bg-purple-600 hover:dark:bg-purple-700':
+                  isValid,
+              },
+              { 'bg-green-500/50 dark:bg-purple-600/50': !isValid }
             )}
             type="submit"
             disabled={!isValid}
