@@ -38,7 +38,10 @@ const Header = ({ activeModal, setModal }: Props) => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="dark:bg-neutral-800 absolute rounded-md shadow-xl right-4 top-20">
+          <Menu.Items
+            className="bg-white dark:bg-neutral-800 absolute rounded-md right-4 top-20"
+            style={{ boxShadow: '0px 0px 12px rgba(61, 55, 61, 0.7)' }}
+          >
             <div className="px-6 py-2 flex flex-col">
               {userModals?.map((it) => (
                 <Menu.Item key={it.name} as={Fragment}>
