@@ -1,7 +1,5 @@
-import { GetStaticPropsContext } from 'next'
 import Header from '@components/header'
 import Sidebar from '@components/sidebar'
-import { getFeedStaticProps } from '@lib/feed-props'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@store/reducers'
 import { useEffect, useState } from 'react'
@@ -11,9 +9,13 @@ import Analytics from '@components/analytics'
 import Employees from '@components/employees'
 import Orders from '@components/orders'
 import Products from '@components/products'
-import { Income, Order, Organization, Role } from '@lib/types'
-import { setAuthStatus, setProfile } from '@store/actions/profile'
-import { getProfile } from '@store/selectors/profile'
+import { Role } from '@lib/types'
+import {
+  setAuthStatus,
+  setOrganization,
+  setProfile,
+} from '@store/actions/profile'
+import { getOrganization, getProfile } from '@store/selectors/profile'
 import Profile from '@components/profile'
 import Settings from '@components/settings'
 import { $authHost } from '@lib/interceptors'
@@ -21,18 +23,7 @@ import EditProfile from '@components/profile/EditProfile/EditProfile'
 import Organizations from '@components/organizations'
 import Admins from '@components/admins'
 
-interface Props {
-  organization: Organization
-  incomes: Income[] | null
-  orders: Order[] | null
-}
-
-export async function getStaticProps(context: GetStaticPropsContext<{}>) {
-  const staticProps = await getFeedStaticProps(context)
-  return staticProps ? JSON.parse(JSON.stringify(staticProps)) : null
-}
-
-const Home = ({ orders, incomes, organization }: Props) => {
+const Home = () => {
   const isUserAuthorized = useSelector(
     (state: RootState) => state.profile.isAuth
   )
@@ -40,6 +31,7 @@ const Home = ({ orders, incomes, organization }: Props) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const profile = useSelector(getProfile)
+  const organization = useSelector(getOrganization)
 
   const authenticateProfile = async () => {
     try {
@@ -48,6 +40,7 @@ const Home = ({ orders, incomes, organization }: Props) => {
         .then((res) => res.data)
       if (profile) {
         dispatch(setProfile(profile))
+        dispatch(setOrganization(profile?.employee[0]?.organization))
         dispatch(setAuthStatus(true))
         setModal(
           profile?.role === Role.OWNER ? Modal.ORGANIZATIONS : Modal.ANALYTICS
@@ -88,7 +81,7 @@ const Home = ({ orders, incomes, organization }: Props) => {
             <Header activeModal={activeModal} setModal={setModal} />
             <div className="h-full dark:bg-black/95 p-5 flex flex-col h-full">
               {activeModal === Modal.ANALYTICS && (
-                <Analytics incomes={incomes} orders={orders} />
+                <Analytics organizationId={organization?.id} />
               )}
               {activeModal === Modal.EMPLOYEES && (
                 <Employees

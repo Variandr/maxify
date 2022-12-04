@@ -1,5 +1,5 @@
 import { Income, Order } from '@lib/types'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Chart } from 'react-chartjs-2'
 import {
   BarElement,
@@ -14,6 +14,8 @@ import {
 } from 'chart.js'
 import LinePercentageChart from '@components/analytics/LinePercentageChart'
 import { labels } from '@components/analytics/data'
+import { getOrdersByOrganizationId } from '@lib/order'
+import { getIncomesByOrganizationId } from '@lib/income'
 
 ChartJS.register(
   LinearScale,
@@ -27,11 +29,32 @@ ChartJS.register(
 )
 
 interface Props {
-  incomes: Income[] | null
-  orders: Order[] | null
+  organizationId: string
 }
 
-const Analytics = ({ incomes, orders }: Props) => {
+const Analytics = ({ organizationId }: Props) => {
+  const [orders, setOrders] = useState<Order[]>([])
+  const [incomes, setIncomes] = useState<Income[]>([])
+
+  const getOrders = async (organizationId: string) => {
+    const ordersData = await getOrdersByOrganizationId(organizationId)
+    if (ordersData) {
+      setOrders(ordersData)
+    }
+  }
+
+  const getIncomes = async (organizationId: string) => {
+    const incomesData = await getIncomesByOrganizationId(organizationId)
+    if (incomesData) {
+      setIncomes(incomesData)
+    }
+  }
+
+  useEffect(() => {
+    void getOrders(organizationId)
+    void getIncomes(organizationId)
+  }, [organizationId])
+
   const sortedIncomes = useMemo(
     () =>
       incomes?.sort((a, b) => {

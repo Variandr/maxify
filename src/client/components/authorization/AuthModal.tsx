@@ -4,7 +4,11 @@ import * as yup from 'yup'
 import classnames from 'classnames'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
-import { setAuthStatus, setProfile } from '@store/actions/profile'
+import {
+  setAuthStatus,
+  setOrganization,
+  setProfile,
+} from '@store/actions/profile'
 import axios from 'axios'
 import { useState } from 'react'
 import { $authHost } from '@lib/interceptors'
@@ -49,6 +53,7 @@ const AuthModal = ({ openForgotPassword }: Props) => {
       .then((res) => res.data)
     if (profile) {
       dispatch(setProfile(profile))
+      dispatch(setOrganization(profile?.employee[0]?.organization))
       dispatch(setAuthStatus(true))
       await router.push('/')
     }

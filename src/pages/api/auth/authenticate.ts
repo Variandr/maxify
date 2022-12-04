@@ -25,6 +25,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         where: {
           email: tokenData?.email,
         },
+        include: {
+          employee: {
+            include: {
+              organization: true,
+            },
+          },
+        },
       })
 
       if (profile) {
