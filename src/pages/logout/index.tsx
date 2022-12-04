@@ -15,7 +15,7 @@ const Logout = () => {
       <div>You are successfully logout!</div>
       <button
         className="py-1 px-4 m-5 bg-zinc-300 dark:bg-neutral-800 hover:dark:bg-neutral-700 hover:bg-zinc-400 rounded-lg"
-        onClick={() => router.back()}
+        onClick={() => router.push('/auth')}
       >
         Return
       </button>
