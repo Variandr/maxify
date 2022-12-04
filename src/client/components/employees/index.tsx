@@ -2,7 +2,7 @@ import { Employee, Role } from '@lib/types'
 import EmployeeItem from './EmployeeItem'
 import Image from 'next/image'
 import AddUserIcon from '@assets/add-user.svg'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AddEmployee from './AddEmployee'
 import { getEmployeesByOrganization } from '@lib/employee'
 import EditEmployee from './EditEmployee'
@@ -29,6 +29,16 @@ const Employees = ({ role, organizationId }: Props) => {
   return (
     <>
       <div className="flex flex-col h-[75vh] overflow-y-auto">
+        {employees?.length && (
+          <div className="flex px-5 py-3 gap-5 text-xl bg-zinc-200 dark:bg-zinc-900/50">
+            <div className="w-1/12"></div>
+            <div className="w-2/12">Full name</div>
+            <div className="w-2/12">Position</div>
+            <div className="w-1/12">Salary</div>
+            <div className="w-1/12">Age</div>
+            <div className="w-3/12">Email</div>
+          </div>
+        )}
         {employees?.map((it, idx) => (
           <EmployeeItem
             key={it.id}
@@ -42,12 +52,12 @@ const Employees = ({ role, organizationId }: Props) => {
         ))}
       </div>
       {Role.USER !== role && (
-        <div className="absolute bottom-2">
+        <div className="absolute bottom-3 right-5 hover:scale-110 duration-300">
           <Image
             onClick={() => showModal(true)}
             src={AddUserIcon}
-            width={80}
-            height={80}
+            width={60}
+            height={60}
             alt="add employee"
             className="dark:invert cursor-pointer"
           />
